@@ -25,19 +25,5 @@ class TestFrugalBoot:
         VERBOSE('frugal boot test complete')
         VERBOSE(result)
 
-    def test_frugal_benchmark(self):
-        HEADING()
-
-        Benchmark.Start()
-        result = Shell.execute("cms frugal benchmark", shell=True)
-        Benchmark.Stop()
-
-        VERBOSE('frugal benchmark complete complete')
-        VERBOSE(result)
-
-    # storing benchmark in db and retrieving it is missing, contrast this to get
-    # it from cloud vs get it from db
-
-
     def test_benchmark(self):
         Benchmark.print()
