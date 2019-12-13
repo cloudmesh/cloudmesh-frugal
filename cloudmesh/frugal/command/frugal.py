@@ -75,10 +75,6 @@ class FrugalCommand(PluginCommand):
                 the user enters their ssh key. This means the benchmark
                 is running
 
-                frugal benchmark is dependent on the vm put command.
-                this may need to be manually added to the vm command
-                file.
-
 
             Limitations:
 
