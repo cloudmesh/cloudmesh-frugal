@@ -18,11 +18,8 @@ git clone https://github.com/cloudmesh/cloudmesh-frugal
 
 cd cloudmesh-frugal
 
-pip install -e 
+pip install -e .
 
-
-Note:
-frugal benchmark depends on the vm put method
 
 
 [![image](https://img.shields.io/travis/TankerHQ/cloudmesh-bar.svg?branch=master)](https://travis-ci.org/TankerHQ/cloudmesn-bar)
