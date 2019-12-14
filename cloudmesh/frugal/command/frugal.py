@@ -90,6 +90,8 @@ class FrugalCommand(PluginCommand):
         arguments.CLOUD = arguments['--cloud'] or None
 
         var_list = Variables(filename="~/.cloudmesh/var-data")
+        if (var_list['frugal.size'] is None):
+            var_list['frugal.size'] = 25
         var_size = var_list['frugal.size']
 
         if arguments.ORDER is None:
@@ -196,7 +198,7 @@ class FrugalCommand(PluginCommand):
             except:
                 Console.msg(cloud + " not available ...")
 
-        flavorframe = self.list(order, 10000000, refresh, printit=False)
+        flavorframe = self.list(order, 10000000, refresh, printit=False, cloud=cloud)
         keysya = list(reachdict.keys())
         flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
         Console.msg(f"Showing top 5 options, booting first option now...")

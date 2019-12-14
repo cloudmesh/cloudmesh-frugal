@@ -26,7 +26,7 @@ def get_aws_pricing(refresh = False):
     def aws_parse(input):
         if ('location' not in x['attributes'] or 'vcpu' not in x['attributes'] or 'price' not in x or x['attributes']['memory'] == 'NA'):
             return
-        return np.array(['aws', x['sku'], x['attributes']['location'], int(x['attributes']['vcpu']), float(x['attributes']['memory'][:-4].replace(',','')), float(x['price']['pricePerUnit']['USD'])])
+        return np.array(['aws', x['sku'], x['attributes']['location'], float(x['attributes']['vcpu']), float(x['attributes']['memory'][:-4].replace(',','')), float(x['price']['pricePerUnit']['USD'])])
 
     #check to see if general flavor entries exist
     awsinfo = cm.collection('aws-flavor')
@@ -42,7 +42,11 @@ def get_aws_pricing(refresh = False):
 
     else:
         Console.msg(f"refreshing aws flavors in now ...")
-        awsprovider = awsprv.Provider(name='aws', configuration="~/.cloudmesh/cloudmesh.yaml")
+        try:
+            awsprovider = awsprv.Provider(name='aws', configuration="~/.cloudmesh/cloudmesh.yaml")
+        except:
+            Console.msg("No aws credentials")
+            return
         awsinfo = awsprovider.flavors()
         for x in awsinfo:
             tempray = aws_parse(x)

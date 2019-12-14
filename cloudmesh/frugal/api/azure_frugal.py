@@ -69,7 +69,11 @@ def get_azure_pricing(refresh = False):
     azureinfo = cm.collection('azure-flavor')
 
     #create provider to get region
-    azureprovider = azureprv.Provider(name='azure', configuration="~/.cloudmesh/cloudmesh.yaml")
+    try:
+        azureprovider = azureprv.Provider(name='azure', configuration="~/.cloudmesh/cloudmesh.yaml")
+    except:
+        Console.msg("No azure credentials")
+        return
     region = azureprovider.LOCATION
     priceregion = location_conv_dict[region]
 

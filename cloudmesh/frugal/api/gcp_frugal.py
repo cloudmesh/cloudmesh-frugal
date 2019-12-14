@@ -35,7 +35,7 @@ def get_google_pricing(refresh = False):
                     else:
                         if type(locations[location]) is str:
                             print(locations[location])
-                        google_list.append(np.array(['gcp',machine,location,int(cores),float(memory),float(locations[location])]))
+                        google_list.append(np.array(['gcp',machine,location,float(cores),float(memory),float(locations[location])]))
         googleinforeturn = np.stack(google_list,axis=0)
 
     googleinfo = np.stack(googleinforeturn,axis=0)
