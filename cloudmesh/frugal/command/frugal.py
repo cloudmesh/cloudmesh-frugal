@@ -190,13 +190,13 @@ class FrugalCommand(PluginCommand):
         Console.msg(f"Checking to see which providers are bootable ...")
         reachdict = {}
 
-        for cloud in clouds:
+        for cloudoption in clouds:
             try:
-                tempProv = Provider(name=cloud, configuration="~/.cloudmesh/cloudmesh.yaml")
-                Console.msg(cloud +" reachable ...")
-                reachdict[cloud] = tempProv
+                tempProv = Provider(name=cloudoption, configuration="~/.cloudmesh/cloudmesh.yaml")
+                Console.msg(cloudoption +" reachable ...")
+                reachdict[cloudoption] = tempProv
             except:
-                Console.msg(cloud + " not available ...")
+                Console.msg(cloudoption + " not available ...")
 
         flavorframe = self.list(order, 10000000, refresh, printit=False, cloud=cloud)
         keysya = list(reachdict.keys())
@@ -255,6 +255,7 @@ class FrugalCommand(PluginCommand):
             return
         print("successfully benchmarked")
         benchtime = float(benchtime.strip())
+        print("benchmark time: " + str(benchtime))
 
         #add the benchmark, cloud, vm, and time to db
         benchdict = {}
