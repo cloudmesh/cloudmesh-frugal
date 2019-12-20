@@ -8,7 +8,7 @@ from cloudmesh.mongo.CmDatabase import CmDatabase
 from cloudmesh.common.util import HEADING
 from cloudmesh.common.debug import VERBOSE
 from cloudmesh.common.Shell import Shell
-from cloudmesh.common3.Benchmark import Benchmark
+from cloudmesh.common.Benchmark import Benchmark
 
 Benchmark.debug()
 
@@ -20,6 +20,7 @@ class TestFrugalBenchmark:
 
         Benchmark.Start()
         result = Shell.execute("cms frugal boot --cloud=aws", shell=True)
+        VERBOSE(result)
         result = Shell.execute("cms frugal benchmark", shell=True)
         Benchmark.Stop()
 
@@ -31,6 +32,7 @@ class TestFrugalBenchmark:
 
         Benchmark.Start()
         result = Shell.execute("cms frugal boot --cloud=azure", shell=True)
+        VERBOSE(result)
         result = Shell.execute("cms frugal benchmark", shell=True)
         Benchmark.Stop()
 

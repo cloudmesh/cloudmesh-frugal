@@ -8,7 +8,7 @@ from cloudmesh.mongo.CmDatabase import CmDatabase
 from cloudmesh.common.util import HEADING
 from cloudmesh.common.debug import VERBOSE
 from cloudmesh.common.Shell import Shell
-from cloudmesh.common3.Benchmark import Benchmark
+from cloudmesh.common.Benchmark import Benchmark
 Benchmark.debug()
 from cloudmesh.common.StopWatch import StopWatch
 

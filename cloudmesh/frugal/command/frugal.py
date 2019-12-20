@@ -149,15 +149,25 @@ class FrugalCommand(PluginCommand):
 
             if 'aws' in clouds:
                 # get aws pricing info
-                printlist = printlist + list(aws_frugal.get_aws_pricing(refresh=refresh).find())
+                awsframe = aws_frugal.get_aws_pricing(refresh=refresh)
+                if awsframe is not None:
+                    printlist = printlist + list(awsframe.find())
 
             if 'gcp' in clouds:
                 # get gcp pricing info
-                printlist = printlist + list(gcp_frugal.get_google_pricing(refresh=refresh).find())
+                gcpframe = gcp_frugal.get_google_pricing(refresh=refresh)
+                if gcpframe is not None:
+                    printlist = printlist + list(gcpframe.find())
 
             if 'azure' in clouds:
                 # get azure pricing info
-                printlist = printlist + list(azure_frugal.get_azure_pricing(refresh=refresh).find())
+                azureframe = azure_frugal.get_azure_pricing(refresh=refresh)
+                if azureframe is not None:
+                    printlist = printlist + list(azureframe.find())
+
+            if len(printlist) == 0:
+                Console.error('no flavors available...')
+                return
 
             # turn numpy array into a pandas dataframe, assign column names, and remove na values
             flavor_frame = pd.DataFrame(printlist)[
@@ -199,6 +209,9 @@ class FrugalCommand(PluginCommand):
                 Console.msg(cloudoption + " not available ...")
 
         flavorframe = self.list(order, 10000000, refresh, printit=False, cloud=cloud)
+        if flavorframe is None:
+            Console.error("cannot boot vm, check credentials")
+            return
         keysya = list(reachdict.keys())
         flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
         Console.msg(f"Showing top 5 options, booting first option now...")
