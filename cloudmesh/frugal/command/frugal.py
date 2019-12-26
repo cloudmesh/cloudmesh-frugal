@@ -14,6 +14,7 @@ from cloudmesh.vm.command.vm import VmCommand
 from cloudmesh.mongo.CmDatabase import CmDatabase
 from os import path
 
+
 class FrugalCommand(PluginCommand):
 
     # noinspection PyUnusedLocal
@@ -90,31 +91,33 @@ class FrugalCommand(PluginCommand):
         arguments.CLOUD = arguments['--cloud'] or None
 
         var_list = Variables(filename="~/.cloudmesh/var-data")
-        if (var_list['frugal.size'] is None):
+        if var_list['frugal.size'] is None:
             var_list['frugal.size'] = 25
         var_size = var_list['frugal.size']
 
         if arguments.ORDER is None:
-            arguments.ORDER='price'
+            arguments.ORDER = 'price'
 
         if arguments.REFRESH is None:
-            arguments.REFRESH=False
+            arguments.REFRESH = False
         else:
-            arguments.REFRESH=True
+            arguments.REFRESH = True
 
         if arguments.BENCHMARK is None:
-            arguments.BENCHMARK=False
+            arguments.BENCHMARK = False
         else:
-            arguments.BENCHMARK=True
+            arguments.BENCHMARK = True
 
         if arguments.SIZE is None:
-            arguments.SIZE=var_size
-
+            arguments.SIZE = var_size
 
         if arguments.list:
-            self.list(order = arguments.ORDER,refresh=bool(arguments.REFRESH), resultssize= int(arguments.SIZE), benchmark=arguments.BENCHMARK, cloud=arguments.CLOUD)
+            self.list(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
+                      resultssize=int(arguments.SIZE),
+                      benchmark=arguments.BENCHMARK, cloud=arguments.CLOUD)
         elif arguments.boot:
-            self.boot(order = arguments.ORDER,refresh=bool(arguments.REFRESH), cloud=arguments.CLOUD)
+            self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
+                      cloud=arguments.CLOUD)
         elif arguments.benchmark:
             self.benchmark()
         else:
@@ -122,7 +125,8 @@ class FrugalCommand(PluginCommand):
 
         return ""
 
-    def list(self,order='price', resultssize=25, refresh=False, printit = True, benchmark=False, cloud=None):
+    def list(self, order='price', resultssize=25, refresh=False, printit=True,
+             benchmark=False, cloud=None):
 
         clouds = ['aws', 'azure', 'gcp']
         if cloud in clouds:
@@ -130,22 +134,25 @@ class FrugalCommand(PluginCommand):
 
         if benchmark:
             # get benchmarks
-            cm = CmDatabase();
+            cm = CmDatabase()
             benchmarks = []
             for cloud in clouds:
                 print("searching " + cloud)
-                benchmarktemp = list(cm.collection(cloud + '-frugal-benchmark').find())
-                benchmarks = benchmarks+benchmarktemp
+                benchmarktemp = list(
+                    cm.collection(cloud + '-frugal-benchmark').find())
+                benchmarks = benchmarks + benchmarktemp
 
-            print(Printer.write(benchmarks, order=['cloud', 'name', 'region', 'ImageId', 'flavor', 'updated', 'BenchmarkTime']))
+            print(Printer.write(benchmarks,
+                                order=['cloud', 'name', 'region', 'ImageId',
+                                       'flavor', 'updated', 'BenchmarkTime']))
             return
         else:
-            #check to make sure that order is either price, cores, or memory
+            # check to make sure that order is either price, cores, or memory
             if order not in ['price', 'cores', 'memory']:
                 Console.error(f'order argument must be price, cores, or memory')
                 return
 
-            printlist=[]
+            printlist = []
 
             if 'aws' in clouds:
                 # get aws pricing info
@@ -169,29 +176,38 @@ class FrugalCommand(PluginCommand):
                 Console.error('no flavors available...')
                 return
 
-            # turn numpy array into a pandas dataframe, assign column names, and remove na values
+            # turn numpy array into a pandas dataframe, assign column names,
+            # and remove na values
             flavor_frame = pd.DataFrame(printlist)[
-                ['provider', 'machine-name', 'location', 'cores', 'core/price', 'memory', 'memory/price', 'price']]
-            flavor_frame = flavor_frame.replace([np.inf, -np.inf], np.nan).dropna()
+                ['provider', 'machine-name', 'location', 'cores', 'core/price',
+                 'memory', 'memory/price', 'price']]
+            flavor_frame = flavor_frame.replace([np.inf, -np.inf],
+                                                np.nan).dropna()
 
             # sort the dataframe by order
             if order == 'cores':
-                flavor_frame = flavor_frame.sort_values(by=['core/price'], ascending=False)
+                flavor_frame = flavor_frame.sort_values(by=['core/price'],
+                                                        ascending=False)
             elif order == 'memory':
-                flavor_frame = flavor_frame.sort_values(by=['memory/price'], ascending=False)
+                flavor_frame = flavor_frame.sort_values(by=['memory/price'],
+                                                        ascending=False)
             else:
-                flavor_frame = flavor_frame.sort_values(by=['price'], ascending=True)
+                flavor_frame = flavor_frame.sort_values(by=['price'],
+                                                        ascending=True)
 
-            # print out the dataframe if printit, print results limited by resultssize
+            # print out the dataframe if printit, print results limited by
+            # resultssize
             if printit:
-                print(Printer.write(flavor_frame.head(resultssize).to_dict('records'),
-                                    order=['provider', 'machine-name', 'location', 'cores', 'core/price', 'memory',
+                print(Printer.write(
+                    flavor_frame.head(resultssize).to_dict('records'),
+                    order=['provider', 'machine-name', 'location', 'cores',
+                           'core/price', 'memory',
 
-                                           'memory/price', 'price']))
+                           'memory/price', 'price']))
             # return the final sorted data frame
             return flavor_frame
 
-    def boot(self,order='price', refresh=False, cloud=None):
+    def boot(self, order='price', refresh=False, cloud=None):
 
         clouds = ['aws', 'azure', 'gcp']
         if cloud in clouds:
@@ -202,13 +218,15 @@ class FrugalCommand(PluginCommand):
 
         for cloudoption in clouds:
             try:
-                tempProv = Provider(name=cloudoption, configuration="~/.cloudmesh/cloudmesh.yaml")
-                Console.msg(cloudoption +" reachable ...")
+                tempProv = Provider(name=cloudoption,
+                                    configuration="~/.cloudmesh/cloudmesh.yaml")
+                Console.msg(cloudoption + " reachable ...")
                 reachdict[cloudoption] = tempProv
             except:
                 Console.msg(cloudoption + " not available ...")
 
-        flavorframe = self.list(order, 10000000, refresh, printit=False, cloud=cloud)
+        flavorframe = self.list(order, 10000000, refresh, printit=False,
+                                cloud=cloud)
         if flavorframe is None:
             Console.error("cannot boot vm, check credentials")
             return
@@ -220,19 +238,21 @@ class FrugalCommand(PluginCommand):
         cheapest = converted[0]
         var_list = Variables(filename="~/.cloudmesh/var-data")
         var_list['cloud'] = cheapest['provider']
-        Console.msg(f'new cloud is ' + var_list['cloud'] + ', booting up the vm with flavor ' + cheapest['machine-name'])
+        Console.msg(f'new cloud is ' + var_list[
+            'cloud'] + ', booting up the vm with flavor ' + cheapest[
+                        'machine-name'])
         vmcom = VmCommand()
         vmcom.do_vm('boot --flavor=' + cheapest['machine-name'])
         return ""
 
     def benchmark(self):
-        #get current cloud and create provider
+        # get current cloud and create provider
         var_list = Variables(filename="~/.cloudmesh/var-data")
         cloud = var_list['cloud']
         name = var_list['vm']
         newProvider = Provider(name=cloud)
 
-        #get vm
+        # get vm
         cm = CmDatabase()
         try:
             vm = cm.find_name(name, "vm")[0]
@@ -240,7 +260,8 @@ class FrugalCommand(PluginCommand):
             Console.error(f"could not find vm {name}")
 
         # get file path of the benchmark
-        filepath = path.dirname(path.dirname(path.abspath(__file__))) + '/api/benchmark.py'
+        filepath = path.dirname(
+            path.dirname(path.abspath(__file__))) + '/api/benchmark.py'
         filepath = filepath.replace('\\', '/')
 
         # prepare command to run the file
@@ -257,20 +278,24 @@ class FrugalCommand(PluginCommand):
             Console.msg(f'put ' + filepath + ' /home/ubuntu')
             vmcom.do_vm('put ' + filepath + ' /home/ubuntu')
         except:
-            Console.msg(f'could not ssh into vm, make sure one is running and reachable')
+            Console.msg(
+                f'could not ssh into vm, make sure one is running and reachable')
             return
         try:
             Console.msg(f'executing the benchmark...')
-            Console.msg('ssh --command=\"chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit\"')
-            benchtime = newProvider.ssh(vm=vm,command="chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit")
+            Console.msg(
+                'ssh --command=\"chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit\"')
+            benchtime = newProvider.ssh(vm=vm,
+                                        command="chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit")
         except:
-            Console.msg(f'could not ssh into vm, make sure one is running and reachable')
+            Console.msg(
+                f'could not ssh into vm, make sure one is running and reachable')
             return
         print("successfully benchmarked")
         benchtime = float(benchtime.strip())
         print("benchmark time: " + str(benchtime))
 
-        #add the benchmark, cloud, vm, and time to db
+        # add the benchmark, cloud, vm, and time to db
         benchdict = {}
         benchdict['cloud'] = cloud
         benchdict['name'] = name
