@@ -1,7 +1,7 @@
 ###############################################################
 # pytest -v --capture=no tests/frugal/test_02_frugal_boot.py
 # pytest -v  tests/frugal/test_02_frugal_boot.py
-# pytest -v --capture=no -v --nocapture tests/frugal/test_02_frugal_boot.py:frugal.<METHIDNAME>
+# pytest -v --capture=no -v --nocapture tests/frugal/test_02_frugal_boot..py::frugal.<METHIDNAME>
 ###############################################################
 import pytest
 from cloudmesh.mongo.CmDatabase import CmDatabase
