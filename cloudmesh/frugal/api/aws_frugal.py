@@ -1,7 +1,7 @@
 import numpy as np
 from datetime import datetime
 from cloudmesh.mongo.CmDatabase import CmDatabase
-from cloudmesh.compute.aws import Provider as awsprv
+from cloudmesh.aws.compute import Provider as awsprv
 from cloudmesh.common.console import Console
 from cloudmesh.frugal.api import helpers
 
