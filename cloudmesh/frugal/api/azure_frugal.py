@@ -1,7 +1,7 @@
 import requests
 import numpy as np
 from cloudmesh.mongo.CmDatabase import CmDatabase
-from cloudmesh.compute.azure import Provider as azureprv
+from cloudmesh.azure.compute import Provider as azureprv
 from cloudmesh.common.console import Console
 from datetime import datetime
 from cloudmesh.frugal.api import helpers
