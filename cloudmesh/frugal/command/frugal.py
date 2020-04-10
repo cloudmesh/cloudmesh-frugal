@@ -90,7 +90,7 @@ class FrugalCommand(PluginCommand):
         arguments.BENCHMARK = arguments['--benchmark'] or None
         arguments.CLOUD = arguments['--cloud'] or None
 
-        var_list = Variables(filename="~/.cloudmesh/var-data")
+        var_list = Variables(filename="~/.cloudmesh/cms burn")
         if var_list['frugal.size'] is None:
             var_list['frugal.size'] = 25
         var_size = var_list['frugal.size']
@@ -236,7 +236,7 @@ class FrugalCommand(PluginCommand):
         converted = flavorframe.head(5).to_dict('records')
         print(Printer.write(converted))
         cheapest = converted[0]
-        var_list = Variables(filename="~/.cloudmesh/var-data")
+        var_list = Variables(filename="~/.cloudmesh/cms burn")
         var_list['cloud'] = cheapest['provider']
         Console.msg(f'new cloud is ' + var_list[
             'cloud'] + ', booting up the vm with flavor ' + cheapest[
@@ -247,7 +247,7 @@ class FrugalCommand(PluginCommand):
 
     def benchmark(self):
         # get current cloud and create provider
-        var_list = Variables(filename="~/.cloudmesh/var-data")
+        var_list = Variables(filename="~/.cloudmesh/cms burn")
         cloud = var_list['cloud']
         name = var_list['vm']
         newProvider = Provider(name=cloud)
