@@ -34,16 +34,6 @@ pandas
 numpy
 """.split("\n")
 
-requiers_cloudmesh = """
-cloudmesh_aws
-cloudmesh_azure
-cloudmesh_volume
-cloudmesh_storage
-""".split("\n")
-
-if "TESTING" not in os.environ:
-    requiers = requiers + requiers_cloudmesh
-
 version = readfile("VERSION")[0].strip()
 
 with open('README.md') as f:
