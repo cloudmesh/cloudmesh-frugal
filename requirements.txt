@@ -1,5 +1,2 @@
 pandas
 numpy
-cloudmesh-aws
-cloudmesh-azure
-cloudmesh-volume

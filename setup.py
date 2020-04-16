@@ -31,9 +31,6 @@ requiers = """
 psutil
 pandas
 numpy
-cloudmesh-volume
-cloudmesh-aws
-cloudmesh-azure
 """.split("\n")
 
 
