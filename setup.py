@@ -76,5 +76,5 @@ setup(
         "coverage",
     ],
     zip_safe=False,
-    namespace_packages=['cloudmesh', 'aws', 'azure', 'volume'],
+    namespace_packages=['cloudmesh'],
 )
