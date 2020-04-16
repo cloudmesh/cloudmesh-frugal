@@ -1,1 +1,5 @@
-# not yet
+pandas
+numpy
+cloudmesh-aws
+cloudmesh-azure
+cloudmesh-volume

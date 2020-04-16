@@ -6,17 +6,18 @@ Cloudmesh frugal is a cloudmesh commandline API that allows user to find the che
 
 ### Installation
 
-Cloudmesh frugal was created with cloudmesh commands, and thus can be installed with the following commands
+Cloudmesh frugal was created with Cloudmesh commands. Cloudmesh-installer must be installed to run.
 ```
 source ~/ENV3/bin/activate
 mkdir cm
 cd cm
 pip install cloudmesh-installer
-cloudmesh-installer git clone cloud
-cloudmesh-installer install cloud
-git clone https://github.com/cloudmesh/cloudmesh-frugal
-cd cloudmesh-frugal
-pip install -e .
+```
+
+To install cloudmesh frugal, enter the following command. 
+
+```
+cloudmesh-installer get frugal
 ```
 
 ### Usage
