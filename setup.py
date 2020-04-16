@@ -17,6 +17,7 @@
 
 from setuptools import find_packages, setup
 import io
+import os
 
 def readfile(filename):
     with io.open(filename, encoding="utf-8") as stream:
@@ -33,6 +34,15 @@ pandas
 numpy
 """.split("\n")
 
+requiers_cloudmesh = """
+cloudmesh_aws
+cloudmesh_azure
+cloudmesh_volume
+cloudmesh_storage
+"""
+
+if "TESTING" not in os.environ:
+    requiers = requiers + requiers_cloudmesh
 
 version = readfile("VERSION")[0].strip()
 
