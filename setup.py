@@ -39,7 +39,7 @@ cloudmesh_aws
 cloudmesh_azure
 cloudmesh_volume
 cloudmesh_storage
-"""
+""".split("\n")
 
 if "TESTING" not in os.environ:
     requiers = requiers + requiers_cloudmesh
