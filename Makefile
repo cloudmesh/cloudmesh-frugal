@@ -17,6 +17,8 @@ source:
 
 requirements:
 	echo "cloudmesh-common" > tmp.txt
+	echo "cloudmesh-azure" > tmp.txt
+	echo "cloudmesh-aws" > tmp.txt
 	pip-compile setup.py
 	fgrep -v "# via" requirements.txt | fgrep -v "cloudmesh" >> tmp.txt
 	mv tmp.txt requirements.txt

@@ -34,16 +34,16 @@ pandas
 numpy
 """.split("\n")
 
-requiers_cloudmesh = """
-cloudmesh-azure
-cloudmesh-aws
-cloudmesh-volume
-cloudmesh-stoage
-""".split("\n")
-
-
-if "TESTING" not in os.environ:
-    requiers = requiers + requiers_cloudmesh
+# requiers_cloudmesh = """
+# cloudmesh-azure
+# cloudmesh-aws
+# cloudmesh-volume
+# cloudmesh-stoage
+# """.split("\n")
+#
+#
+# if "TESTING" not in os.environ:
+#     requiers = requiers + requiers_cloudmesh
 
 
 version = readfile("VERSION")[0].strip()

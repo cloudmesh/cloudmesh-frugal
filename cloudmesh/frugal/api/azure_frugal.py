@@ -100,17 +100,17 @@ def get_azure_pricing(refresh=False):
     azure_list = []
     for flavor in azureinfo:
         key = flavor['name'].lower()
-        if key[0] is 'b':
+        if key[0] == 'b':
             # basic
             search = 'linux' + key[6:].replace('_', '').replace('-',
                                                                 '').replace(
                 'promo', '') + 'basic'
-        elif key[0] is 's':
+        elif key[0] == 's':
             # standard
             search = 'linux' + key[9:].replace('_', '').replace('-',
                                                                 '').replace(
                 'promo', '') + 'standard'
-        elif key[0] is 'l':
+        elif key[0] == 'l':
             # low_priority
             search = 'linux' + key[13:].replace('_', '').replace('-',
                                                                  '').replace(
