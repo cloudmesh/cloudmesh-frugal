@@ -7,12 +7,13 @@ from cloudmesh.compute.vm.Provider import Provider
 import pandas as pd
 import numpy as np
 from cloudmesh.common.Printer import Printer
-from cloudmesh.frugal.api import aws_frugal, gcp_frugal, azure_frugal
+from cloudmesh.frugal.api import aws_frugal, gcp_frugal, azure_frugal, storage
 from datetime import datetime
 from cloudmesh.common.variables import Variables
 from cloudmesh.vm.command.vm import VmCommand
 from cloudmesh.mongo.CmDatabase import CmDatabase
 from os import path
+import PySimpleGUI as gui
 
 
 class FrugalCommand(PluginCommand):
@@ -27,6 +28,8 @@ class FrugalCommand(PluginCommand):
                 frugal list [--benchmark] [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD]
                 frugal boot [--refresh] [--order=ORDER] [--cloud=CLOUD]
                 frugal benchmark
+                frugal storage
+                frugal gui
 
             Arguments:
               ORDER       sorting hierarchy, either price, cores, or
@@ -118,12 +121,14 @@ class FrugalCommand(PluginCommand):
         elif arguments.boot:
             self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
                       cloud=arguments.CLOUD)
-        elif arguments.benchmark:
-            self.benchmark()
+        elif arguments.storage:
+            self.storage()
         else:
             return ""
 
         return ""
+
+
 
     def list(self, order='price', resultssize=25, refresh=False, printit=True,
              benchmark=False, cloud=None):
@@ -166,11 +171,11 @@ class FrugalCommand(PluginCommand):
                 if gcpframe is not None:
                     printlist = printlist + list(gcpframe.find())
 
-            if 'azure' in clouds:
-                # get azure pricing info
-                azureframe = azure_frugal.get_azure_pricing(refresh=refresh)
-                if azureframe is not None:
-                    printlist = printlist + list(azureframe.find())
+            # if 'azure' in clouds:
+            #     # get azure pricing info
+            #     azureframe = azure_frugal.get_azure_pricing(refresh=refresh)
+            #     if azureframe is not None:
+            #         printlist = printlist + list(azureframe.find())
 
             if len(printlist) == 0:
                 Console.error('no flavors available...')
@@ -208,109 +213,81 @@ class FrugalCommand(PluginCommand):
             return flavor_frame
 
     def boot(self, order='price', refresh=False, cloud=None):
+        # clouds = ['aws', 'azure', 'gcp']
+        # if cloud in clouds:
+        #     clouds = [cloud]
+        #
+        # Console.msg(f"Checking to see which providers are bootable ...")
+        # reachdict = {}
+        #
+        # for cloudoption in clouds:
+        #     try:
+        #         tempProv = Provider(name=cloudoption,
+        #                             configuration="~/.cloudmesh/cloudmesh.yaml")
+        #         Console.msg(cloudoption + " reachable ...")
+        #         reachdict[cloudoption] = tempProv
+        #     except:
+        #         Console.msg(cloudoption + " not available ...")
+        #
+        # flavorframe = self.list(order, 10000000, refresh, printit=False,
+        #                         cloud=clouds)
+        # if flavorframe is None:
+        #     Console.error("cannot boot vm, check credentials")
+        #     return
+        # keysya = list(reachdict.keys())
+        # flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
+        # Console.msg(f"Showing top 5 options, booting first option now...")
+        # print(flavorframe.head(5))
+        # converted = flavorframe.head(5).to_dict('records')
+        # print(Printer.write(converted))
+        # cheapest = converted[0]
+        # var_list = Variables(filename="~/.cloudmesh/cms burn")
+        # var_list['cloud'] = cheapest['provider']
+        # Console.msg(f'new cloud is ' + var_list[
+        #     'cloud'] + ', booting up the vm with flavor ' + cheapest[
+        #                 'machine-name'])
+        # vmcom = VmCommand()
+        # vmcom.do_vm('boot --flavor=' + cheapest['machine-name'])
+        # return ""
+        raise NotImplemented
 
-        clouds = ['aws', 'azure', 'gcp']
-        if cloud in clouds:
-            clouds = [cloud]
 
-        Console.msg(f"Checking to see which providers are bootable ...")
-        reachdict = {}
+    def storage(self):
 
-        for cloudoption in clouds:
-            try:
-                tempProv = Provider(name=cloudoption,
-                                    configuration="~/.cloudmesh/cloudmesh.yaml")
-                Console.msg(cloudoption + " reachable ...")
-                reachdict[cloudoption] = tempProv
-            except:
-                Console.msg(cloudoption + " not available ...")
+        gui.theme('SystemDefault1')
 
-        flavorframe = self.list(order, 10000000, refresh, printit=False,
-                                cloud=cloud)
-        if flavorframe is None:
-            Console.error("cannot boot vm, check credentials")
-            return
-        keysya = list(reachdict.keys())
-        flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
-        Console.msg(f"Showing top 5 options, booting first option now...")
-        converted = flavorframe.head(5).to_dict('records')
-        print(Printer.write(converted))
-        cheapest = converted[0]
-        var_list = Variables(filename="~/.cloudmesh/cms burn")
-        var_list['cloud'] = cheapest['provider']
-        Console.msg(f'new cloud is ' + var_list[
-            'cloud'] + ', booting up the vm with flavor ' + cheapest[
-                        'machine-name'])
-        vmcom = VmCommand()
-        vmcom.do_vm('boot --flavor=' + cheapest['machine-name'])
-        return ""
-
-    def benchmark(self):
-        # get current cloud and create provider
-        var_list = Variables(filename="~/.cloudmesh/cms burn")
-        cloud = var_list['cloud']
-        name = var_list['vm']
-        newProvider = Provider(name=cloud)
-
-        # get vm
-        cm = CmDatabase()
-        try:
-            vm = cm.find_name(name, "vm")[0]
-        except IndexError:
-            Console.error(f"could not find vm {name}")
-
-        # get file path of the benchmark
-        filepath = path.dirname(
-            path.dirname(path.abspath(__file__))) + '/api/benchmark.py'
-        filepath = filepath.replace('\\', '/')
-
-        # prepare command to run the file
-        vmcom = VmCommand()
-        try:
-            Console.msg('waiting for vm to be reachable...')
-            Console.msg('wait')
-            newProvider.wait(vm=vm)
-        except:
-            Console.msg('could not reach vm for benchmark')
-            return
-        try:
-            Console.msg(f'moving benchmark file to vm...')
-            Console.msg(f'put ' + filepath + ' /home/ubuntu')
-            vmcom.do_vm('put ' + filepath + ' /home/ubuntu')
-        except:
-            Console.msg(
-                f'could not ssh into vm, make sure one is running and reachable')
-            return
-        try:
-            Console.msg(f'executing the benchmark...')
-            Console.msg(
-                'ssh --command=\"chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit\"')
-            benchtime = newProvider.ssh(vm=vm,
-                                        command="chmod +x benchmark.py;./benchmark.py;rm benchmark.py;exit")
-        except:
-            Console.msg(
-                f'could not ssh into vm, make sure one is running and reachable')
-            return
-        print("successfully benchmarked")
-        benchtime = float(benchtime.strip())
-        print("benchmark time: " + str(benchtime))
-
-        # add the benchmark, cloud, vm, and time to db
-        benchdict = {}
-        benchdict['cloud'] = cloud
-        benchdict['name'] = name
-        benchdict['ImageId'] = vm['ImageId']
-        benchdict['flavor'] = vm['InstanceType']
-        benchdict['region'] = vm['Placement']['AvailabilityZone']
-        benchdict['BenchmarkTime'] = benchtime
-        benchdict['updated'] = str(datetime.utcnow())
-        benchdict["cm"] = {
-            "kind": 'frugal-benchmark',
-            "driver": cloud,
-            "cloud": cloud,
-            "name": name,
-            "updated": str(datetime.utcnow()),
-        }
-
-        cm.update(benchdict, progress=True)
-        return ""
+        gui_enabled = True
+        layout = [[gui.Text(text='Storage Type', size=(30,1))],
+                  [gui.Combo(['Standard', 'Infrequent', 'Coldline', 'Archive'])],
+                  [gui.Frame(layout=[
+                      [gui.Checkbox('AWS', size=(10, 1)), gui.Checkbox('GCP', default=False)]], title='Cloud Platform',
+                      relief=gui.RELIEF_FLAT, tooltip='Use these to set Clouds to Search')],
+                  [gui.Frame(layout=[
+                      [gui.Checkbox('US East', size=(10, 1)), gui.Checkbox('US Central', default=False),
+                       gui.Checkbox('US West', size=(10, 1))]], title='Cloud Platform',
+                      relief=gui.RELIEF_FLAT, tooltip='Use these to set Clouds to Search')],
+                  [gui.Button('Ok'), gui.Button('Cancel')]]
+        window = gui.Window('Cloud Storage Price Comparison', layout)
+        while True:
+            event, values = window.read()
+            if event in (None, 'Cancel'):  # if user closes window or clicks cancel
+                break
+            elif event in('Ok'):
+                storage_type = values
+                break
+        clouds=[]
+        locations=[]
+        cloud_dict={1:'aws', 2:'gcp'}
+        loc_dict={3:'US East', 4:'US Central', 5:'US West'}
+        for i in [1,2]:
+            if values[i]:
+                clouds.append(cloud_dict[i])
+        for i in range(3, len(values)):
+            if values[i]:
+                locations.append(loc_dict[i])
+        window.close()
+        print('Searching for', values[0], ' storage in', ", ".join([str(item) for item in clouds]))
+        list = storage.get_storage_pricing(values[0], clouds, locations)
+        if values[0] != 'Archive':
+            print(Printer.write(list.to_dict('records'),order=['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
+                     'Location', 'Location Code']))

@@ -12,11 +12,13 @@ source ~/ENV3/bin/activate
 mkdir cm
 cd cm
 pip install cloudmesh-installer
+cloudmesh-installer get cms
 ```
 
 To install cloudmesh frugal, enter the following command. 
 
 ```
+cloudmesh-installer get azure aws gcp
 cloudmesh-installer get frugal
 ```
 
@@ -26,6 +28,7 @@ cloudmesh-installer get frugal
         ::
             Usage:
                 frugal list [--benchmark] [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD]
+                frugal storage [--cloud=CLOUD] [--class=CLASS]
                 frugal boot [--refresh] [--order=ORDER] [--cloud=CLOUD]
                 frugal benchmark
             Arguments:
@@ -36,6 +39,10 @@ cloudmesh-installer get frugal
                           cms set frugal.size = SIZE
               CLOUD       Limits the frugal method to a specific cloud
                           instead of all supported providers
+              CLASS       Limits the results to specific class of storage
+                          including standard (regular access), nearline 
+                          (infrequent access), coldline (quartly access 
+                          or less), or archive (yearly access or less)
             Options:
                --refresh         forces a refresh on all entries for
                                  all supported providers
