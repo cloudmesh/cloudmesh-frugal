@@ -18,19 +18,26 @@ cloudmesh-installer get cms
 To install cloudmesh frugal, enter the following command. 
 
 ```
-cloudmesh-installer get azure aws gcp
+cloudmesh-installer get aws gcp
 cloudmesh-installer get frugal
 ```
+For easy use, run command 
+
+``
+cms frugal gui
+``
+
+Follow prompts to price compare cloud storage and compute instances. 
 
 ### Usage
 
 ```
         ::
             Usage:
-                frugal list [--benchmark] [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD]
-                frugal storage [--cloud=CLOUD] [--class=CLASS]
-                frugal boot [--refresh] [--order=ORDER] [--cloud=CLOUD]
-                frugal benchmark
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION]
+                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD]
+                frugal gui
+
             Arguments:
               ORDER       sorting hierarchy, either price, cores, or
                           memory
@@ -39,10 +46,12 @@ cloudmesh-installer get frugal
                           cms set frugal.size = SIZE
               CLOUD       Limits the frugal method to a specific cloud
                           instead of all supported providers
-              CLASS       Limits the results to specific class of storage
-                          including standard (regular access), nearline 
-                          (infrequent access), coldline (quartly access 
-                          or less), or archive (yearly access or less)
+              REGION      Limits the frugal method to a specific region
+
+              TYPE        Storage type for frugal storage. Options include
+                          standard, nearline, coldline and archive. These
+                          types are determine by the intended access frequency
+
             Options:
                --refresh         forces a refresh on all entries for
                                  all supported providers
@@ -51,29 +60,27 @@ cloudmesh-installer get frugal
                                  to the console
                --benchmark       prints the benchmark results instead
                                  of flavors
+
             Description:
-                frugal list
-                    lists cheapest flavors for aws, azure, and gcp
-                    in a sorted table by default, if --benchmark is
-                    used then it lists benchmark results stored in
-                    the db
-                frugal boot
-                    boots the cheapest bootable vm from the frugal
-                    list.
-                frugal benchmark
-                    executes a benchmarking command on the newest
-                    available vm on the current cloud
+                frugal compute
+                    lists cheapest flavors of compute instances for aws and gcp
+                    in a sorted table by default
+
+                frugal storage
+                    lists cheapest instances of object storage for aws and gcp
+                    in a sorted table by default
+
+                frugal gui
+                    graphical interface for both compute and storage fuctions.
+
             Examples:
-                 cms frugal list --refresh --order=price --size=150
-                 cms frugal list --benchmark
-                 cms frugal boot --order=memory
-                 cms frugal benchmark
-                 ...and so on
+
             Tips:
-                frugal benchmark will stall the command line after
-                the user enters their ssh key. This means the benchmark
-                is running
+                frugal gui provides lists the available options for regions and types of storage
+
+
             Limitations:
+
                 frugal boot and benchmark only work on implemented providers
 ```
 

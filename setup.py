@@ -32,6 +32,7 @@ requiers = """
 psutil
 pandas
 numpy
+PySimpleGUI
 """.split("\n")
 
 # requiers_cloudmesh = """

@@ -8,7 +8,7 @@ def get_storage_pricing(tier, clouds, locations):
     aws_tiers={'Standard': {'class': 'AmazonS3'},
                'Infrequent': {'class': 'Infrequent Access'},
                'Coldline': {'class': 'Archive'},
-               'Archive': {'class':'AWSStorageGatewayDeepArchive'}}
+               'Archive': {'class':'Archive'}}
     gcp_tiers={'Standard':{'class':'CP-BIGSTORE-STORAGE'},
                'Infrequent': {'class': 'CP-NEARLINE-STORAGE'},
                'Coldline': {'class': 'CP-BIGSTORE-STORAGE-COLDLINE'},
@@ -63,48 +63,50 @@ def get_storage_pricing(tier, clouds, locations):
     }
 
 
-    locdict={'US East':{'gcp':['us-east1','us-east4'],
+    locdict={'US_East':{'gcp':['us-east1','us-east4', 'northamerica-northeast1'],
                           'aws':['us-east-1']},
-               'US Central':{'gcp':['us-central1'],
-                             'aws':['us-east-2']},
-               'US West': {'gcp':['us-west1','us-west2','us-west3','us-west4'],
-                              'aws':['us-west-1','us-west-2']},
-               }
+             'US_Central':{'gcp':['us-central1'],
+                           'aws':['us-east-2']},
+             'US_West': {'gcp':['us-west1','us-west2','us-west3','us-west4'],
+                         'aws':['us-west-1','us-west-2']},
+             'UK': {'gcp':['europe-west1'],
+                    'aws':['eu-west-2', 'eu-west-1']},
+             'Europe':{'gcp':['europe-north1','europe-west1','europe-west4', 'europe-west3','europe-west6'],
+                       'aws':['eu-south-1', 'eu-west-3', 'eu-north-1','eu-central-1']},
+             'Asia':{'gcp':['asia-east1','asia-east2', 'asia-northeast1', 'asia-northeast2', 'asia-northeast3',
+                            'asia-south1','asia-southeast1'],
+                       'aws':['ap-east-1', 'ap-south-1','ap-northeast-3','ap-northeast-2','ap-southeast-1',
+                              'ap-southeast-2','ap-northeast-1', 'me-south-1']},
+             'Australia':{'gcp':['australia-southeast'],
+                    'aws':['ap-southeast-2']},
+             'Africa':{'gcp':[],
+                    'aws':['af-south-1']},
+             'S_America':{'gcp':['southamerica-east1'],
+                    'aws':['sa-east-1', 'ca-central-1' ]}
+             }
     if 'aws' in clouds:
         for location in locations:
             for loc in locdict[location]['aws']:
-                if tier == 'Archive':
-                    stor = "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSStorageGatewayDeepArchive/current/{}/index.csv".format(loc,loc)
-                    s = requests.get(stor).content
-                    s3 = pd.read_csv(io.StringIO(s.decode('utf-8')), skiprows=lambda x: x in [0, 4], header=3)
-                    AWStemp=s3[['PricePerUnit', 'Fee Code']].T
-                    AWStemp.columns = AWStemp.iloc[1]
-                    AWStemp= AWStemp.drop(AWStemp.index[1])
-                    AWStemp=AWStemp.rename(columns={np.nan:'Storage'})
-                    AWStemp['Location Code']= loc
-                    AWStemp['Location']=aws_locales[loc]
-
+                stor = "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/{}/index.csv".format(loc)
+                s = requests.get(stor).content
+                s3 = pd.read_csv(io.StringIO(s.decode('utf-8')), skiprows=lambda x: x in [0, 4], header=3)
+                if tier == 'Standard':
+                    AWStemp= s3[s3['Storage Class'].isin(['Non-Critical Data', 'General Purpose'])]
+                    AWStemp= AWStemp[['SKU','Storage Class','StartingRange','EndingRange','Unit','PricePerUnit']]
                 else:
-                    stor = "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/{}/index.csv".format(loc,loc)
-                    s = requests.get(stor).content
-                    s3 = pd.read_csv(io.StringIO(s.decode('utf-8')), skiprows=lambda x: x in [0, 4], header=3)
-                    if tier == 'Standard':
-                        AWStemp= s3[s3['Storage Class'].isin(['Non-Critical Data', 'General Purpose'])]
-                        AWStemp= AWStemp[['SKU','Storage Class','StartingRange','EndingRange','Unit','PricePerUnit']]
-                    else:
-                        AWStemp= s3[s3['Storage Class']==aws_tiers[tier]['class']]
-                        AWStemp = AWStemp[['SKU','Storage Class', 'StartingRange', 'EndingRange', 'Unit', 'PricePerUnit']]
-                    AWStemp['Location Code']= loc
-                    AWStemp['Location']=aws_locales[loc]
-                    AWStemp['Cloud'] = 'AWS'
-                    AWStemp = AWStemp.rename(columns={'SKU': 'Name'})
-                    columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
-                                     'Location', 'Location Code']
-                    AWStemp = AWStemp.reindex(columns=columnsTitles)
-                try:
-                    AWS= pd.concat([AWS,AWStemp])
-                except NameError:
-                    AWS=AWStemp
+                    AWStemp= s3[s3['Storage Class']==aws_tiers[tier]['class']]
+                    AWStemp = AWStemp[['SKU','Storage Class', 'StartingRange', 'EndingRange', 'Unit', 'PricePerUnit']]
+                AWStemp['Location Code']= loc
+                AWStemp['Location']=aws_locales[loc]
+                AWStemp['Cloud'] = 'AWS'
+                AWStemp = AWStemp.rename(columns={'SKU': 'Name'})
+                columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
+                                 'Location', 'Location Code']
+                AWStemp = AWStemp.reindex(columns=columnsTitles)
+            try:
+                AWS= pd.concat([AWS,AWStemp])
+            except NameError:
+                AWS=AWStemp
 
 
 
@@ -120,7 +122,7 @@ def get_storage_pricing(tier, clouds, locations):
         gcp = gcp.reset_index()
         gcp=gcp.rename(columns={'index':'Location Code', 0:'PricePerUnit'})
         gcp['Location']= gcp['Location Code'].apply(lambda x: gcp_locales.get(x))
-        gcp['StorageClass']= tier
+        gcp['Storage Class']= tier
         gcp['StartingRange']=0
         gcp['EndingRange']=np.inf
         gcp['Unit']= 'GB-Mo'
@@ -129,9 +131,10 @@ def get_storage_pricing(tier, clouds, locations):
             for i in locdict[loc]['gcp']:
                 locs.append(i)
         gcp = gcp[gcp['Location Code'].isin(locs)]
-        gcp['Name']= gcp['StorageClass']
+        gcp['Name']= gcp_tiers[tier]['class']
         gcp['Cloud']= 'GCP'
-        columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange', 'Location', 'Location Code']
+        columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
+                         'Location', 'Location Code']
         gcp = gcp.reindex(columns=columnsTitles)
         try:
             storage=pd.concat([storage, gcp])
