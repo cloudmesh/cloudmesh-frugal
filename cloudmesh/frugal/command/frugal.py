@@ -14,6 +14,7 @@ from cloudmesh.vm.command.vm import VmCommand
 from cloudmesh.mongo.CmDatabase import CmDatabase
 from os import path
 import PySimpleGUI as gui
+from time import time
 
 
 class FrugalCommand(PluginCommand):
@@ -25,9 +26,9 @@ class FrugalCommand(PluginCommand):
         ::
 
             Usage:
-                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION]
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION][--benchmark]
                 frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD]
-                frugal gui
+                frugal gui[--benchmark]
 
             Arguments:
               ORDER       sorting hierarchy, either price, cores, or
@@ -36,7 +37,7 @@ class FrugalCommand(PluginCommand):
                           console. Default is 25, can be changed with
                           cms set frugal.size = SIZE
               CLOUD       Limits the frugal method to a specific cloud
-                          instead of all supported providers
+                          instead of all supported providers. Works with AWS and GCP
               REGION      Limits the frugal method to a specific region
 
               TYPE        Storage type for frugal storage. Options include
@@ -49,8 +50,7 @@ class FrugalCommand(PluginCommand):
                --order=ORDER     sets the sorting on the results list
                --size=SIZE       sets the number of results returned
                                  to the console
-               --benchmark       prints the benchmark results instead
-                                 of flavors
+
 
             Description:
                 frugal compute
@@ -72,7 +72,7 @@ class FrugalCommand(PluginCommand):
 
             Limitations:
 
-                frugal boot and benchmark only work on implemented providers
+                frugal benchmark only work on implemented providers
 
 
 
@@ -83,6 +83,7 @@ class FrugalCommand(PluginCommand):
         arguments.CLOUD = arguments['--cloud'] or None
         arguments.TYPE = arguments['--type'] or None
         arguments.REGION= arguments['--region'] or None
+        arguments.BENCHMARK= arguments['--benchmark'] or None
         var_list = Variables(filename="~/.cloudmesh/cms burn")
         if var_list['frugal.size'] is None:
             var_list['frugal.size'] = 25
@@ -100,18 +101,21 @@ class FrugalCommand(PluginCommand):
             arguments.REFRESH = False
         else:
             arguments.REFRESH = True
-
+        if arguments.BENCHMARK is None:
+            arguments.BENCHMARK=False
+        else:
+            arguments.BENCHMARK=True
         if arguments.SIZE is None:
             arguments.SIZE = var_size
 
         if arguments.compute:
             self.list(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
-                      resultssize=int(arguments.SIZE), cloud=arguments.CLOUD, region=arguments.REGION)
-        # elif arguments.boot:
-        #     self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
-        #               cloud=arguments.CLOUD)
+                      resultssize=int(arguments.SIZE), cloud=arguments.CLOUD, region=arguments.REGION, benchmark=arguments.BENCHMARK)
+        elif arguments.boot:
+            self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
+                      cloud=arguments.CLOUD)
         elif arguments.storage:
-            self.storage(type=arguments.TYPE, region=arguments.REGION, cloud=arguments.CLOUD)
+            self.storage(type=arguments.TYPE, regions=arguments.REGION, cloud=arguments.CLOUD, benchmark=arguments.BENCHMARK)
 
         elif arguments.gui:
             self.gui()
@@ -122,9 +126,9 @@ class FrugalCommand(PluginCommand):
 
 
 
-    def list(self, region, order='price', resultssize=25, refresh=False, printit=True, cloud=None):
-        refresh=True
-
+    def list(self, region, order='price', resultssize=25, refresh=False, printit=True, cloud=None, benchmark=False):
+        if benchmark:
+            t = time()
         locdict = {'US_East': {'gcp': ['us-east1', 'us-east4', 'northamerica-northeast1'],
                                'aws': ['us-east-1']},
                    'US_Central': {'gcp': ['us-central1'],
@@ -212,6 +216,10 @@ class FrugalCommand(PluginCommand):
 
         # print out the dataframe if printit, print results limited by
         # resultssize
+        if benchmark:
+            delta=time()-t
+            print(delta)
+            return delta
         if printit:
             print(Printer.write(
                 flavor_frame.head(resultssize).to_dict('records'),
@@ -221,7 +229,8 @@ class FrugalCommand(PluginCommand):
         # return the final sorted data frame
         return flavor_frame
 
-    def boot(self, order='price', refresh=False, cloud=None):
+    def boot(self, order='price', refresh=False, cloud=None, benchmark=False):
+
         clouds = ['aws', 'gcp']
         if cloud in clouds:
             clouds = [cloud]
@@ -240,9 +249,9 @@ class FrugalCommand(PluginCommand):
 
         flavorframe = self.list(order, 10000000, refresh, printit=False,
                                 cloud=clouds)
-        if flavorframe is None:
-            Console.error("cannot boot vm, check credentials")
-            return
+        # if flavorframe is None:
+        #     Console.error("cannot boot vm, check credentials")
+        #     return
         keysya = list(reachdict.keys())
         flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
         Console.msg(f"Showing top 5 options, booting first option now...")
@@ -259,7 +268,7 @@ class FrugalCommand(PluginCommand):
         vmcom.do_vm('boot --flavor=' + cheapest['machine-name'])
         return ""
 
-    def storage(self, type, regions, cloud):
+    def storage(self, type, regions, cloud, benchmark=False):
         clouds = ['aws', 'gcp']
         if cloud in clouds:
             clouds = [cloud]
@@ -274,7 +283,6 @@ class FrugalCommand(PluginCommand):
                      'Location', 'Location Code']))
         return list
     def gui(self):
-
         gui.theme('SystemDefault1')
         gui_enabled = True
         layout = [

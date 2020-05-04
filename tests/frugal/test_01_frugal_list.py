@@ -14,51 +14,35 @@ Benchmark.debug()
 @pytest.mark.incremental
 class TestFrugalList:
 
-    def test_list_refresh(self):
+
+    def compute_list(self):
         HEADING()
 
         Benchmark.Start()
-        result = Shell.execute("cms frugal list --refresh", shell=True)
+        result = Shell.execute("cms frugal compute", shell=True)
         Benchmark.Stop()
 
-        cm = CmDatabase()
-
-        # shoudl we have frugal beeing first??? gregor is not sure
-        # is is asw-frugal or frugal-aws based on local-key it may be
-        # frugal second just as you have.
-
-        #^ Collection names are created using the cm dictionary
-
-        assert cm.collection('aws-frugal').estimated_document_count() > 0
-        assert cm.collection('gcp-frugal').estimated_document_count() > 0
-        assert cm.collection('azure-frugal').estimated_document_count() > 0
-
-        VERBOSE('frugal list refresh complete')
+        VERBOSE('frugal storage complete')
         VERBOSE(result)
 
-
-    def test_list_size(self):
+    def storage_list(self):
         HEADING()
 
         Benchmark.Start()
-        result = Shell.execute("cms frugal list --size=500", shell=True)
+        result = Shell.execute("cms frugal storage", shell=True)
         Benchmark.Stop()
 
-        VERBOSE('frugal list size complete')
+        VERBOSE('frugal storage complete')
         VERBOSE(result)
 
-    def test_help_order(self):
+    def gui_list(self):
         HEADING()
 
         Benchmark.Start()
-        result = Shell.execute("cms frugal list --order=memory", shell=True)
+        result = Shell.execute("cms frugal gui", shell=True)
         Benchmark.Stop()
 
-        VERBOSE('frugal list order complete')
+        VERBOSE('frugal storage complete')
         VERBOSE(result)
 
-    # comparision between differnt clouds missing. introduce a new test 03 in
-    # which you measure for each cloud you supportedthe benchmark and compare with a fgrep script
 
-    def test_benchmark(self):
-        Benchmark.print()
