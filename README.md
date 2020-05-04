@@ -34,8 +34,8 @@ Follow prompts to price compare cloud storage and compute instances.
 ```
         ::
             Usage:
-                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION]
-                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD]
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION] [--benchmark]
+                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD] [-benchmark]
                 frugal gui
 
             Arguments:
