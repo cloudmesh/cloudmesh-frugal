@@ -58,6 +58,8 @@ def get_google_pricing(refresh=False):
              'memory', 'memory/price', 'price']]
         flavor_frame.to_csv(join(path, 'gcp.csv'))
     else:
+        if 'gcp.csv' not in data_dir:
+            flavor_frame = get_google_pricing(refresh=True)
         flavor_frame = pd.read_csv(join(path, 'gcp.csv'))
 
 

@@ -35,7 +35,7 @@ class FrugalCommand(PluginCommand):
               REGION      Limits the frugal method to a specific region
 
               TYPE        Storage type for frugal storage. Options include
-                          standard, nearline, coldline and archive. These
+                          Standard, Infrequent, Coldline and Archive. These
                           types are determine by the intended access frequency
 
             Options:
@@ -61,6 +61,8 @@ class FrugalCommand(PluginCommand):
                     graphical interface for both compute and storage fuctions.
 
             Examples:
+                frugal storage --type=Infrequent
+                frugal compute --cloud=gcp
 
             Tips:
                 frugal gui provides lists the available options for regions and types of storage
@@ -117,7 +119,7 @@ class FrugalCommand(PluginCommand):
         #               region=arguments.REGION, benchmark=arguments.BENCHMARKD)
         elif arguments.storage:
             self.storage(type=arguments.TYPE, regions=arguments.REGION, cloud=arguments.CLOUD,
-                         benchmark=arguments.BENCHMARK, output=arguments.OUTPUT)
+                         benchmark=arguments.BENCHMARK, output=arguments.OUTPUT, refresh=arguments.REFRESH)
 
         elif arguments.gui:
             self.gui()
@@ -180,14 +182,7 @@ class FrugalCommand(PluginCommand):
             for i in locdict[loc]['gcp']:
                 locs.append(i)
         if 'gcp' in clouds:
-            # get gcp pricing info
             gcpframe= gcp_frugal.get_google_pricing(refresh=refresh)
-            # gcpframe = gcp_frugal.get_google_pricing(refresh=refresh)
-            # if gcpframe is not None:
-            #     printlist = printlist + list(gcpframe.find())
-            # flavor_frame = pd.DataFrame(printlist)[
-            #     ['provider', 'machine-name', 'location', 'cores', 'core/price',
-            #      'memory', 'memory/price', 'price']]
         if 'aws' in clouds and 'gcp' in clouds:
             flavor_frame= pd.concat([awsframe, gcpframe])
         elif 'gcp' in clouds:
@@ -226,7 +221,7 @@ class FrugalCommand(PluginCommand):
         # return the final sorted data frame
         return flavor_frame
 
-    def storage(self, type, regions, cloud, benchmark=False, output='table', resultssize=25):
+    def storage(self, type, regions, cloud, benchmark=False, output='table', resultssize=25, refresh=False):
         if benchmark:
             t= time()
         clouds = ['aws', 'gcp']
@@ -237,7 +232,7 @@ class FrugalCommand(PluginCommand):
         else:
             regions = ['US_East', 'US_Central', 'US_West', 'UK', 'Europe', 'Asia', 'Australia', 'Africa', 'S_America']
         type =type if type else 'Standard'
-        list = storage.get_storage_pricing(type, clouds, regions)
+        list = storage.get_storage_pricing(type, clouds, regions, refresh=refresh)
         if benchmark:
             delta= time()-t
             print(delta)

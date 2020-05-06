@@ -2,9 +2,15 @@ import requests
 import io
 import pandas as pd
 import numpy as np
+from pathlib import Path
+from os import listdir
+from os.path import isfile, join
 
 
-def get_storage_pricing(tier, clouds, locations):
+def get_storage_pricing(tier, clouds, locations, refresh= False):
+    path = str(Path.home()) + ('/cm/cloudmesh-frugal/cloudmesh/frugal/storage-data')
+    data_dir = [f for f in listdir(path) if isfile(join(path, f))]
+
     aws_tiers={'Standard': {'class': 'AmazonS3'},
                'Infrequent': {'class': 'Infrequent Access'},
                'Coldline': {'class': 'Archive'},
@@ -87,22 +93,29 @@ def get_storage_pricing(tier, clouds, locations):
     if 'aws' in clouds:
         for location in locations:
             for loc in locdict[location]['aws']:
-                stor = "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/{}/index.csv".format(loc)
-                s = requests.get(stor).content
-                s3 = pd.read_csv(io.StringIO(s.decode('utf-8')), skiprows=lambda x: x in [0, 4], header=3)
-                if tier == 'Standard':
-                    AWStemp= s3[s3['Storage Class'].isin(['Non-Critical Data', 'General Purpose'])]
-                    AWStemp= AWStemp[['SKU','Storage Class','StartingRange','EndingRange','Unit','PricePerUnit']]
+                if refresh:
+                    stor = "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/{}/index.csv".format(loc)
+                    s = requests.get(stor).content
+                    s3 = pd.read_csv(io.StringIO(s.decode('utf-8')), skiprows=lambda x: x in [0, 4], header=3)
+                    if tier == 'Standard':
+                        AWStemp= s3[s3['Storage Class'].isin(['Non-Critical Data', 'General Purpose'])]
+                        AWStemp= AWStemp[['SKU','Storage Class','StartingRange','EndingRange','Unit','PricePerUnit']]
+                    else:
+                        AWStemp= s3[s3['Storage Class']==aws_tiers[tier]['class']]
+                        AWStemp = AWStemp[['SKU','Storage Class', 'StartingRange', 'EndingRange', 'Unit', 'PricePerUnit']]
+                    AWStemp['Location Code']= loc
+                    AWStemp['Location']=aws_locales[loc]
+                    AWStemp['Cloud'] = 'AWS'
+                    AWStemp = AWStemp.rename(columns={'SKU': 'Name'})
+                    columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
+                                     'Location', 'Location Code']
+                    AWStemp = AWStemp.reindex(columns=columnsTitles)
+                    AWStemp.to_csv(join(path, 'aws-{}-{}.csv'.format(tier, loc)))
+                elif 'aws-{}-{}.csv'.format(tier,loc) not in data_dir:
+                    get_storage_pricing(tier, clouds, locations, refresh=True)
+                    AWStemp = pd.read_csv(join(path, 'aws-{}-{}.csv'.format(tier, loc)))
                 else:
-                    AWStemp= s3[s3['Storage Class']==aws_tiers[tier]['class']]
-                    AWStemp = AWStemp[['SKU','Storage Class', 'StartingRange', 'EndingRange', 'Unit', 'PricePerUnit']]
-                AWStemp['Location Code']= loc
-                AWStemp['Location']=aws_locales[loc]
-                AWStemp['Cloud'] = 'AWS'
-                AWStemp = AWStemp.rename(columns={'SKU': 'Name'})
-                columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
-                                 'Location', 'Location Code']
-                AWStemp = AWStemp.reindex(columns=columnsTitles)
+                    AWStemp = pd.read_csv(join(path, 'aws-{}-{}.csv'.format(tier, loc)))
             try:
                 AWS= pd.concat([AWS,AWStemp])
             except NameError:
@@ -115,17 +128,24 @@ def get_storage_pricing(tier, clouds, locations):
         except NameError:
             storage=AWS
     if 'gcp' in clouds:
-        googleinfo = requests.get(
-            'https://cloudpricingcalculator.appspot.com/static/data/pricelist.json?v=1570117883807').json()[
-            'gcp_price_list']
-        gcp = pd.DataFrame(googleinfo[gcp_tiers[tier]['class']], index=[0]).T
-        gcp = gcp.reset_index()
-        gcp=gcp.rename(columns={'index':'Location Code', 0:'PricePerUnit'})
-        gcp['Location']= gcp['Location Code'].apply(lambda x: gcp_locales.get(x))
-        gcp['Storage Class']= tier
-        gcp['StartingRange']=0
-        gcp['EndingRange']=np.inf
-        gcp['Unit']= 'GB-Mo'
+        if refresh:
+            googleinfo = requests.get(
+                'https://cloudpricingcalculator.appspot.com/static/data/pricelist.json?v=1570117883807').json()[
+                'gcp_price_list']
+            gcp = pd.DataFrame(googleinfo[gcp_tiers[tier]['class']], index=[0]).T
+            gcp = gcp.reset_index()
+            gcp=gcp.rename(columns={'index':'Location Code', 0:'PricePerUnit'})
+            gcp['Location']= gcp['Location Code'].apply(lambda x: gcp_locales.get(x))
+            gcp['Storage Class']= tier
+            gcp['StartingRange']=0
+            gcp['EndingRange']=np.inf
+            gcp['Unit']= 'GB-Mo'
+            gcp.to_csv(join(path, 'gcp-{}.csv'.format(tier)))
+        elif 'gcp-{}.csv'.format(tier) not in data_dir:
+            get_storage_pricing(tier, clouds, locations, refresh=True)
+            gcp = pd.read_csv(join(path, 'gcp-{}.csv'.format(tier)))
+        else:
+            gcp = pd.read_csv(join(path, 'gcp-{}.csv'.format(tier)))
         locs= []
         for loc in locations:
             for i in locdict[loc]['gcp']:
@@ -143,6 +163,7 @@ def get_storage_pricing(tier, clouds, locations):
     columnsTitles = ['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
                      'Location', 'Location Code']
     storage = storage.reindex(columns=columnsTitles)
+
     return storage
 '''
 https://cloud.google.com/storage/pricing#operations-pricing
