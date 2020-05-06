@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+81,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.0264,GB-Mo,0,1024.0,Central,ca-central-1
+82,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.026,GB-Mo,1024,51200.0,Central,ca-central-1
+83,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.0255,GB-Mo,51200,512000.0,Central,ca-central-1
+84,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.0251,GB-Mo,512000,1024000.0,Central,ca-central-1
+85,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.0246,GB-Mo,1024000,5120000.0,Central,ca-central-1
+86,AWS,KSN9K5R3E3KA9P37,Non-Critical Data,0.0242,GB-Mo,5120000,inf,Central,ca-central-1
+118,AWS,9MDYGCA9S4SXXTJF,General Purpose,0.025,GB-Mo,0,51200.0,Central,ca-central-1
+119,AWS,9MDYGCA9S4SXXTJF,General Purpose,0.024,GB-Mo,51200,512000.0,Central,ca-central-1
+120,AWS,9MDYGCA9S4SXXTJF,General Purpose,0.023,GB-Mo,512000,inf,Central,ca-central-1

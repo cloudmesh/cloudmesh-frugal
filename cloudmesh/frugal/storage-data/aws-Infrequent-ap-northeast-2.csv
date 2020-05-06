@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+56,AWS,RVRGFDX9Z2S5WEDS,Infrequent Access,0.018,GB-Mo,0,inf,Seoul,ap-northeast-2
+124,AWS,V798E4Z6243PDG64,Infrequent Access,0.0144,GB-Mo,0,inf,Seoul,ap-northeast-2

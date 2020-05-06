@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+24,AWS,KRY2B57FKTA8GJW7,Infrequent Access,0.01,GB-Mo,0,inf,N. Virginia,us-east-1
+60,AWS,379GYJUQ5WFBUYGM,Infrequent Access,0.0125,GB-Mo,0,inf,N. Virginia,us-east-1

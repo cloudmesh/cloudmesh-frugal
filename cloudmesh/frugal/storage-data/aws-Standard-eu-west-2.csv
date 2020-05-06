@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+44,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0252,GB-Mo,0,1024.0,London,eu-west-2
+45,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0248,GB-Mo,1024,51200.0,London,eu-west-2
+46,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0244,GB-Mo,51200,512000.0,London,eu-west-2
+47,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0239,GB-Mo,512000,1024000.0,London,eu-west-2
+48,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0235,GB-Mo,1024000,5120000.0,London,eu-west-2
+49,AWS,JUJ2UTFYQMUPAJJ9,Non-Critical Data,0.0231,GB-Mo,5120000,inf,London,eu-west-2
+50,AWS,DV3FSFEQ3QM4J6VP,General Purpose,0.024,GB-Mo,0,51200.0,London,eu-west-2
+51,AWS,DV3FSFEQ3QM4J6VP,General Purpose,0.023,GB-Mo,51200,512000.0,London,eu-west-2
+52,AWS,DV3FSFEQ3QM4J6VP,General Purpose,0.022,GB-Mo,512000,inf,London,eu-west-2

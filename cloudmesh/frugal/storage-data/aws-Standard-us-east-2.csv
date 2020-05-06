@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+10,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.024,GB-Mo,0,1024.0,Ohio,us-east-2
+11,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Ohio,us-east-2
+12,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Ohio,us-east-2
+13,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Ohio,us-east-2
+14,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Ohio,us-east-2
+15,AWS,5RKM69S7HJP2XSFT,Non-Critical Data,0.022,GB-Mo,5120000,inf,Ohio,us-east-2
+117,AWS,YPGKVRB2EKTVDJDT,General Purpose,0.023,GB-Mo,0,51200.0,Ohio,us-east-2
+118,AWS,YPGKVRB2EKTVDJDT,General Purpose,0.022,GB-Mo,51200,512000.0,Ohio,us-east-2
+119,AWS,YPGKVRB2EKTVDJDT,General Purpose,0.021,GB-Mo,512000,inf,Ohio,us-east-2

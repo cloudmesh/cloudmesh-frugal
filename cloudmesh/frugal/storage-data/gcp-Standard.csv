@@ -1,0 +1,29 @@
+,Location Code,PricePerUnit,Location,Storage Class,StartingRange,EndingRange,Unit
+0,us-central1,0.02,"Council Bluffs, Iowa, USA",Standard,0,inf,GB-Mo
+1,us-east1,0.02,"Moncks Corner, South Carolina, USA",Standard,0,inf,GB-Mo
+2,us-east4,0.023,"Ashburn, Northern Virginia, USA",Standard,0,inf,GB-Mo
+3,us-west4,0.023,"Las Vegas, Nevada, USA",Standard,0,inf,GB-Mo
+4,us-west1,0.02,"The Dalles, Oregon, USA",Standard,0,inf,GB-Mo
+5,us-west2,0.023,"Los Angeles, California, USA",Standard,0,inf,GB-Mo
+6,us-west3,0.023,"Salt Lake City, Utah, USA",Standard,0,inf,GB-Mo
+7,europe-west1,0.02,"St. Ghislain, Belgium",Standard,0,inf,GB-Mo
+8,europe-west2,0.023,"London, England, UK",Standard,0,inf,GB-Mo
+9,europe-west3,0.023,"Frankfurt, Germany",Standard,0,inf,GB-Mo
+10,europe-west4,0.02,"Eemshaven, Netherlands",Standard,0,inf,GB-Mo
+11,europe-west6,0.025,"Zürich, Switzerland",Standard,0,inf,GB-Mo
+12,europe-north1,0.02,"Hamina, Finland",Standard,0,inf,GB-Mo
+13,northamerica-northeast1,0.023,"Montréal, Québec, Canada",Standard,0,inf,GB-Mo
+14,asia-east1,0.02,"Changhua County, Taiwan",Standard,0,inf,GB-Mo
+15,asia-east2,0.023,Hong Kong,Standard,0,inf,GB-Mo
+16,asia-northeast1,0.023,"Tokyo, Japan",Standard,0,inf,GB-Mo
+17,asia-northeast2,0.023,"Osaka, Japan",Standard,0,inf,GB-Mo
+18,asia-northeast3,0.023,"Seoul, South Korea",Standard,0,inf,GB-Mo
+19,asia-southeast1,0.02,"Jurong West, Singapore",Standard,0,inf,GB-Mo
+20,australia-southeast1,0.023,,Standard,0,inf,GB-Mo
+21,southamerica-east1,0.035,"Osasco (São Paulo), Brazil",Standard,0,inf,GB-Mo
+22,asia-south1,0.023,"Mumbai, India",Standard,0,inf,GB-Mo
+23,us,0.026,,Standard,0,inf,GB-Mo
+24,europe,0.026,,Standard,0,inf,GB-Mo
+25,asia,0.026,,Standard,0,inf,GB-Mo
+26,eur4,0.036,,Standard,0,inf,GB-Mo
+27,nam4,0.036,,Standard,0,inf,GB-Mo

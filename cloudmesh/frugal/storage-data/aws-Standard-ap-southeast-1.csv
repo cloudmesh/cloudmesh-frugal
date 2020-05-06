@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+94,AWS,M6MTARCQFUQBQ2V3,General Purpose,0.025,GB-Mo,0,51200.0,Singapore,ap-southeast-1
+95,AWS,M6MTARCQFUQBQ2V3,General Purpose,0.024,GB-Mo,51200,512000.0,Singapore,ap-southeast-1
+96,AWS,M6MTARCQFUQBQ2V3,General Purpose,0.023,GB-Mo,512000,inf,Singapore,ap-southeast-1
+131,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.024,GB-Mo,0,1024.0,Singapore,ap-southeast-1
+132,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Singapore,ap-southeast-1
+133,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Singapore,ap-southeast-1
+134,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Singapore,ap-southeast-1
+135,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Singapore,ap-southeast-1
+136,AWS,G8AXBRPMUXJ7CWNZ,Non-Critical Data,0.022,GB-Mo,5120000,inf,Singapore,ap-southeast-1

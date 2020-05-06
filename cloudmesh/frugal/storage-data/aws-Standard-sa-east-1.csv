@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+74,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.0326,GB-Mo,0,1024.0,São Paulo,sa-east-1
+75,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.032,GB-Mo,1024,51200.0,São Paulo,sa-east-1
+76,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.0315,GB-Mo,51200,512000.0,São Paulo,sa-east-1
+77,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.0309,GB-Mo,512000,1024000.0,São Paulo,sa-east-1
+78,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.0304,GB-Mo,1024000,5120000.0,São Paulo,sa-east-1
+79,AWS,BN8N7ETBJSKZHM3F,Non-Critical Data,0.0299,GB-Mo,5120000,inf,São Paulo,sa-east-1
+129,AWS,ZNX83R5ZU4NXKACG,General Purpose,0.0405,GB-Mo,0,51200.0,São Paulo,sa-east-1
+130,AWS,ZNX83R5ZU4NXKACG,General Purpose,0.039,GB-Mo,51200,512000.0,São Paulo,sa-east-1
+131,AWS,ZNX83R5ZU4NXKACG,General Purpose,0.037,GB-Mo,512000,inf,São Paulo,sa-east-1

@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+40,AWS,DMZJGBEMT38JGZNF,Infrequent Access,0.01104,GB-Mo,0,inf,Bahrain,me-south-1
+152,AWS,3UXXVGQ2GNUA6Y33,Infrequent Access,0.0138,GB-Mo,0,inf,Bahrain,me-south-1

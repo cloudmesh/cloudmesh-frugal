@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+53,AWS,T8J3JW77AYQDSTY4,Infrequent Access,0.0149,GB-Mo,0,inf,Cape Town,af-south-1
+54,AWS,UEY8QZVH8E9TAVQ6,Infrequent Access,0.0119,GB-Mo,0,inf,Cape Town,af-south-1

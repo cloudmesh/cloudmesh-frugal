@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+89,AWS,DG68CRBF9ZQZKRS6,Infrequent Access,0.0131,GB-Mo,0,inf,London,eu-west-2
+143,AWS,D5E4EF6WHNBW3QFU,Infrequent Access,0.01048,GB-Mo,0,inf,London,eu-west-2

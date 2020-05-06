@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+67,AWS,WPK3X32HU7AKZET6,Infrequent Access,0.016,GB-Mo,0,inf,Singapore,ap-southeast-1
+104,AWS,VRNEADAH39YMA2GG,Infrequent Access,0.02,GB-Mo,0,inf,Singapore,ap-southeast-1

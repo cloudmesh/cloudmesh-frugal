@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+26,AWS,UA99VUWP94X8H2W7,General Purpose,0.025,GB-Mo,0,51200.0,Bahrain,me-south-1
+27,AWS,UA99VUWP94X8H2W7,General Purpose,0.024,GB-Mo,51200,512000.0,Bahrain,me-south-1
+28,AWS,UA99VUWP94X8H2W7,General Purpose,0.023,GB-Mo,512000,inf,Bahrain,me-south-1
+94,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.0264,GB-Mo,0,1024.0,Bahrain,me-south-1
+95,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.026,GB-Mo,1024,51200.0,Bahrain,me-south-1
+96,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.0255,GB-Mo,51200,512000.0,Bahrain,me-south-1
+97,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.0251,GB-Mo,512000,1024000.0,Bahrain,me-south-1
+98,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.0246,GB-Mo,1024000,5120000.0,Bahrain,me-south-1
+99,AWS,RTAFRQ5DQBA98HTE,Non-Critical Data,0.0242,GB-Mo,5120000,inf,Bahrain,me-south-1

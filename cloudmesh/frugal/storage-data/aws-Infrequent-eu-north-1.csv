@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+47,AWS,YMDA3U9AMVR9CQKW,Infrequent Access,0.01,GB-Mo,0,inf,Stockholm,eu-north-1
+102,AWS,EHYYY83E32UJWDAQ,Infrequent Access,0.0125,GB-Mo,0,inf,Stockholm,eu-north-1

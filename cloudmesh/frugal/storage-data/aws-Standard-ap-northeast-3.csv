@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+94,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.0264,GB-Mo,0,1024.0,Osaka-Local,ap-northeast-3
+95,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.0259,GB-Mo,1024,51200.0,Osaka-Local,ap-northeast-3
+96,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.0255,GB-Mo,51200,512000.0,Osaka-Local,ap-northeast-3
+97,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.025,GB-Mo,512000,1024000.0,Osaka-Local,ap-northeast-3
+98,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.0246,GB-Mo,1024000,5120000.0,Osaka-Local,ap-northeast-3
+99,AWS,EP5XH8BKD3PKRJE2,Non-Critical Data,0.0242,GB-Mo,5120000,inf,Osaka-Local,ap-northeast-3
+155,AWS,FZJPRKCZ5H2HPU55,General Purpose,0.025,GB-Mo,0,51200.0,Osaka-Local,ap-northeast-3
+156,AWS,FZJPRKCZ5H2HPU55,General Purpose,0.024,GB-Mo,51200,512000.0,Osaka-Local,ap-northeast-3
+157,AWS,FZJPRKCZ5H2HPU55,General Purpose,0.023,GB-Mo,512000,inf,Osaka-Local,ap-northeast-3

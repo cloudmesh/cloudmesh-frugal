@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+81,AWS,FNWV6QQJ34ZTYY9U,Infrequent Access,0.0125,GB-Mo,0,inf,Ohio,us-east-2
+101,AWS,H2YVSEHWT4QDZ6EG,Infrequent Access,0.01,GB-Mo,0,inf,Ohio,us-east-2

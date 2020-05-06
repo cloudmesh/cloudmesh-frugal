@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+133,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.024,GB-Mo,0,1024.0,N. Virginia,us-east-1
+134,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,N. Virginia,us-east-1
+135,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,N. Virginia,us-east-1
+136,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,N. Virginia,us-east-1
+137,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,N. Virginia,us-east-1
+138,AWS,M9D34X8ZHECCKKRU,Non-Critical Data,0.022,GB-Mo,5120000,inf,N. Virginia,us-east-1
+146,AWS,WP9ANXZGBYYSGJEA,General Purpose,0.023,GB-Mo,0,51200.0,N. Virginia,us-east-1
+147,AWS,WP9ANXZGBYYSGJEA,General Purpose,0.022,GB-Mo,51200,512000.0,N. Virginia,us-east-1
+148,AWS,WP9ANXZGBYYSGJEA,General Purpose,0.021,GB-Mo,512000,inf,N. Virginia,us-east-1

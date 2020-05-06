@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+3,AWS,8J8N4Q7B7RUWRJRX,Infrequent Access,0.0135,GB-Mo,0,inf,Frankfurt,eu-central-1
+34,AWS,F6DQ725G4AE9TA53,Infrequent Access,0.0108,GB-Mo,0,inf,Frankfurt,eu-central-1

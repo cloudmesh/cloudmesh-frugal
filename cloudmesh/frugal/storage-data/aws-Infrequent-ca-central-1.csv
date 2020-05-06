@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+34,AWS,TX2PVYSPAP4RJAS9,Infrequent Access,0.01104,GB-Mo,0,inf,Central,ca-central-1
+159,AWS,EEADMYR3YTRCD3AM,Infrequent Access,0.0138,GB-Mo,0,inf,Central,ca-central-1

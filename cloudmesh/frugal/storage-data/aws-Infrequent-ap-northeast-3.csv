@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+10,AWS,8EU5YE5KYEYXX9XJ,Infrequent Access,0.0152,GB-Mo,0,inf,Osaka-Local,ap-northeast-3
+45,AWS,9BXQRBJ5C8CGHKJJ,Infrequent Access,0.019,GB-Mo,0,inf,Osaka-Local,ap-northeast-3

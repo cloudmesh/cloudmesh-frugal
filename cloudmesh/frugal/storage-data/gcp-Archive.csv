@@ -1,0 +1,31 @@
+,Location Code,PricePerUnit,Location,Storage Class,StartingRange,EndingRange,Unit
+0,us-central1,0.0012,"Council Bluffs, Iowa, USA",Archive,0,inf,GB-Mo
+1,us-east1,0.0012,"Moncks Corner, South Carolina, USA",Archive,0,inf,GB-Mo
+2,us-east4,0.0025,"Ashburn, Northern Virginia, USA",Archive,0,inf,GB-Mo
+3,us-west4,0.0025,"Las Vegas, Nevada, USA",Archive,0,inf,GB-Mo
+4,us-west1,0.0012,"The Dalles, Oregon, USA",Archive,0,inf,GB-Mo
+5,us-west2,0.0025,"Los Angeles, California, USA",Archive,0,inf,GB-Mo
+6,us-west3,0.0025,"Salt Lake City, Utah, USA",Archive,0,inf,GB-Mo
+7,europe-west1,0.0012,"St. Ghislain, Belgium",Archive,0,inf,GB-Mo
+8,europe-west2,0.0025,"London, England, UK",Archive,0,inf,GB-Mo
+9,europe-west3,0.0025,"Frankfurt, Germany",Archive,0,inf,GB-Mo
+10,europe-west4,0.0012,"Eemshaven, Netherlands",Archive,0,inf,GB-Mo
+11,europe-west6,0.0025,"Zürich, Switzerland",Archive,0,inf,GB-Mo
+12,europe-north1,0.0012,"Hamina, Finland",Archive,0,inf,GB-Mo
+13,northamerica-northeast1,0.0025,"Montréal, Québec, Canada",Archive,0,inf,GB-Mo
+14,asia-east,0.0015,,Archive,0,inf,GB-Mo
+15,asia-east1,0.0015,"Changhua County, Taiwan",Archive,0,inf,GB-Mo
+16,asia-east2,0.0025,Hong Kong,Archive,0,inf,GB-Mo
+17,asia-northeast,0.0025,,Archive,0,inf,GB-Mo
+18,asia-northeast1,0.0025,"Tokyo, Japan",Archive,0,inf,GB-Mo
+19,asia-northeast2,0.0025,"Osaka, Japan",Archive,0,inf,GB-Mo
+20,asia-northeast3,0.0025,"Seoul, South Korea",Archive,0,inf,GB-Mo
+21,asia-southeast1,0.0015,"Jurong West, Singapore",Archive,0,inf,GB-Mo
+22,australia-southeast1,0.0025,,Archive,0,inf,GB-Mo
+23,southamerica-east1,0.003,"Osasco (São Paulo), Brazil",Archive,0,inf,GB-Mo
+24,asia-south1,0.0025,"Mumbai, India",Archive,0,inf,GB-Mo
+25,us,0.004,,Archive,0,inf,GB-Mo
+26,europe,0.004,,Archive,0,inf,GB-Mo
+27,asia,0.004,,Archive,0,inf,GB-Mo
+28,eur4,0.005,,Archive,0,inf,GB-Mo
+29,nam4,0.005,,Archive,0,inf,GB-Mo

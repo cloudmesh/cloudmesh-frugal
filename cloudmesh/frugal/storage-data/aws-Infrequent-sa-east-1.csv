@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+90,AWS,JX8EJ6EW8U55EW87,Infrequent Access,0.026,GB-Mo,0,inf,São Paulo,sa-east-1
+92,AWS,JY7ZXQD5XK7E4HDB,Infrequent Access,0.0208,GB-Mo,0,inf,São Paulo,sa-east-1

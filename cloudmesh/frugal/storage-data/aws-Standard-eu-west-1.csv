@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+87,AWS,4AJHPB29ZPVFADXP,General Purpose,0.023,GB-Mo,0,51200.0,Ireland,eu-west-1
+88,AWS,4AJHPB29ZPVFADXP,General Purpose,0.022,GB-Mo,51200,512000.0,Ireland,eu-west-1
+89,AWS,4AJHPB29ZPVFADXP,General Purpose,0.021,GB-Mo,512000,inf,Ireland,eu-west-1
+131,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.024,GB-Mo,0,1024.0,Ireland,eu-west-1
+132,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Ireland,eu-west-1
+133,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Ireland,eu-west-1
+134,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Ireland,eu-west-1
+135,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Ireland,eu-west-1
+136,AWS,2M7QTWC3ZQPKXMXZ,Non-Critical Data,0.022,GB-Mo,5120000,inf,Ireland,eu-west-1

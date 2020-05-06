@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+6,AWS,MKYEFQ5B63GBC5FE,General Purpose,0.0274,GB-Mo,0,51200.0,Cape Town,af-south-1
+7,AWS,MKYEFQ5B63GBC5FE,General Purpose,0.0262,GB-Mo,51200,512000.0,Cape Town,af-south-1
+8,AWS,MKYEFQ5B63GBC5FE,General Purpose,0.025,GB-Mo,512000,inf,Cape Town,af-south-1
+81,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.024,GB-Mo,0,1024.0,Cape Town,af-south-1
+82,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Cape Town,af-south-1
+83,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Cape Town,af-south-1
+84,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Cape Town,af-south-1
+85,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Cape Town,af-south-1
+86,AWS,ZDWM9E2QDFWS3UFB,Non-Critical Data,0.022,GB-Mo,5120000,inf,Cape Town,af-south-1

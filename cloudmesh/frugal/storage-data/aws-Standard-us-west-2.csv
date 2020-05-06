@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+0,AWS,Z3FQZG73HYSPVABR,General Purpose,0.023,GB-Mo,0,51200.0,Oregon,us-west-2
+1,AWS,Z3FQZG73HYSPVABR,General Purpose,0.022,GB-Mo,51200,512000.0,Oregon,us-west-2
+2,AWS,Z3FQZG73HYSPVABR,General Purpose,0.021,GB-Mo,512000,inf,Oregon,us-west-2
+121,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.024,GB-Mo,0,1024.0,Oregon,us-west-2
+122,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Oregon,us-west-2
+123,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Oregon,us-west-2
+124,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Oregon,us-west-2
+125,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Oregon,us-west-2
+126,AWS,EH648PS2P84N95QQ,Non-Critical Data,0.022,GB-Mo,5120000,inf,Oregon,us-west-2

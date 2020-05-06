@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+28,AWS,TZP3WS2ZP5WNPJT2,General Purpose,0.026,GB-Mo,0,51200.0,N. California,us-west-1
+29,AWS,TZP3WS2ZP5WNPJT2,General Purpose,0.025,GB-Mo,51200,512000.0,N. California,us-west-1
+30,AWS,TZP3WS2ZP5WNPJT2,General Purpose,0.024,GB-Mo,512000,inf,N. California,us-west-1
+76,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.0264,GB-Mo,0,1024.0,N. California,us-west-1
+77,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.0259,GB-Mo,1024,51200.0,N. California,us-west-1
+78,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.0255,GB-Mo,51200,512000.0,N. California,us-west-1
+79,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.025,GB-Mo,512000,1024000.0,N. California,us-west-1
+80,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.0246,GB-Mo,1024000,5120000.0,N. California,us-west-1
+81,AWS,NW75MCAQ9V42XJYQ,Non-Critical Data,0.0242,GB-Mo,5120000,inf,N. California,us-west-1

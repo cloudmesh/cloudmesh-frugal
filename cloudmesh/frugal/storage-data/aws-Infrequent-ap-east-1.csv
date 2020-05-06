@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+23,AWS,86GPY9Y74Z2QSSS8,Infrequent Access,0.018,GB-Mo,0,inf,Hong Kong,ap-east-1
+47,AWS,UNQ5N933X52XA7SG,Infrequent Access,0.0144,GB-Mo,0,inf,Hong Kong,ap-east-1

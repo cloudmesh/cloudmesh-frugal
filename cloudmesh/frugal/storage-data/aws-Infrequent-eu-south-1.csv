@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+65,AWS,MN57QY9KHBRWMJ5U,Infrequent Access,0.0105,GB-Mo,0,inf,Milan,eu-south-1
+70,AWS,4Q7HYMGANZXRFNAS,Infrequent Access,0.0131,GB-Mo,0,inf,Milan,eu-south-1

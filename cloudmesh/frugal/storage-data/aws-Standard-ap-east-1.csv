@@ -1,0 +1,10 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+111,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.024,GB-Mo,0,1024.0,Hong Kong,ap-east-1
+112,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.0236,GB-Mo,1024,51200.0,Hong Kong,ap-east-1
+113,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.0232,GB-Mo,51200,512000.0,Hong Kong,ap-east-1
+114,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.0228,GB-Mo,512000,1024000.0,Hong Kong,ap-east-1
+115,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.0224,GB-Mo,1024000,5120000.0,Hong Kong,ap-east-1
+116,AWS,TH3S9EXRS476K5DS,Non-Critical Data,0.022,GB-Mo,5120000,inf,Hong Kong,ap-east-1
+148,AWS,BZE5UBRXZCWYTTRP,General Purpose,0.025,GB-Mo,0,51200.0,Hong Kong,ap-east-1
+149,AWS,BZE5UBRXZCWYTTRP,General Purpose,0.024,GB-Mo,51200,512000.0,Hong Kong,ap-east-1
+150,AWS,BZE5UBRXZCWYTTRP,General Purpose,0.023,GB-Mo,512000,inf,Hong Kong,ap-east-1

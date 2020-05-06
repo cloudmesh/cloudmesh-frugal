@@ -1,0 +1,3 @@
+,Cloud,Name,Storage Class,PricePerUnit,Unit,StartingRange,EndingRange,Location,Location Code
+109,AWS,UUTYQBVVNCYXYTTT,Infrequent Access,0.0125,GB-Mo,0,inf,Oregon,us-west-2
+111,AWS,FWMEVWRWWUFFTJV6,Infrequent Access,0.01,GB-Mo,0,inf,Oregon,us-west-2

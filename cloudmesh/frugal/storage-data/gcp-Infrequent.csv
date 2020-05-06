@@ -1,0 +1,30 @@
+,Location Code,PricePerUnit,Location,Storage Class,StartingRange,EndingRange,Unit
+0,us,0.01,,Infrequent,0,inf,GB-Mo
+1,us-central1,0.01,"Council Bluffs, Iowa, USA",Infrequent,0,inf,GB-Mo
+2,us-east1,0.01,"Moncks Corner, South Carolina, USA",Infrequent,0,inf,GB-Mo
+3,us-east4,0.016,"Ashburn, Northern Virginia, USA",Infrequent,0,inf,GB-Mo
+4,us-west4,0.016,"Las Vegas, Nevada, USA",Infrequent,0,inf,GB-Mo
+5,us-west1,0.01,"The Dalles, Oregon, USA",Infrequent,0,inf,GB-Mo
+6,us-west2,0.016,"Los Angeles, California, USA",Infrequent,0,inf,GB-Mo
+7,us-west3,0.016,"Salt Lake City, Utah, USA",Infrequent,0,inf,GB-Mo
+8,europe,0.01,,Infrequent,0,inf,GB-Mo
+9,europe-west1,0.01,"St. Ghislain, Belgium",Infrequent,0,inf,GB-Mo
+10,europe-west2,0.016,"London, England, UK",Infrequent,0,inf,GB-Mo
+11,europe-west3,0.016,"Frankfurt, Germany",Infrequent,0,inf,GB-Mo
+12,europe-west4,0.01,"Eemshaven, Netherlands",Infrequent,0,inf,GB-Mo
+13,europe-west6,0.014,"Zürich, Switzerland",Infrequent,0,inf,GB-Mo
+14,europe-north1,0.01,"Hamina, Finland",Infrequent,0,inf,GB-Mo
+15,northamerica-northeast1,0.016,"Montréal, Québec, Canada",Infrequent,0,inf,GB-Mo
+16,asia-east,0.01,,Infrequent,0,inf,GB-Mo
+17,asia-east1,0.01,"Changhua County, Taiwan",Infrequent,0,inf,GB-Mo
+18,asia-east2,0.016,Hong Kong,Infrequent,0,inf,GB-Mo
+19,asia-northeast,0.016,,Infrequent,0,inf,GB-Mo
+20,asia-northeast1,0.016,"Tokyo, Japan",Infrequent,0,inf,GB-Mo
+21,asia-northeast2,0.016,"Osaka, Japan",Infrequent,0,inf,GB-Mo
+22,asia-northeast3,0.016,"Seoul, South Korea",Infrequent,0,inf,GB-Mo
+23,asia-southeast,0.01,,Infrequent,0,inf,GB-Mo
+24,asia-southeast1,0.01,"Jurong West, Singapore",Infrequent,0,inf,GB-Mo
+25,australia-southeast1,0.016,,Infrequent,0,inf,GB-Mo
+26,australia,0.016,,Infrequent,0,inf,GB-Mo
+27,southamerica-east1,0.02,"Osasco (São Paulo), Brazil",Infrequent,0,inf,GB-Mo
+28,asia-south1,0.016,"Mumbai, India",Infrequent,0,inf,GB-Mo
