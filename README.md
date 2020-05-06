@@ -21,6 +21,8 @@ pip install cloudmesh-installer
 cd cm
 ```
 
+### Installation
+
 To install cloudmesh frugal, enter the following command. 
 
 ```
