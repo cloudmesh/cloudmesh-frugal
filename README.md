@@ -43,8 +43,8 @@ Else, run any of the following commands.
         ::
 
             Usage:
-                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION] [--benchmark] [--output=FORMAT]
-                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD] [--benchmark] [--output=FORMAT]
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION] [--benchmark] [--output=FORMAT] 
+                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD] [--benchmark] [--output=FORMAT] [--refresh]
                 frugal gui [--benchmark]
 
             Arguments:
@@ -94,6 +94,17 @@ Else, run any of the following commands.
                 frugal benchmark only work on implemented providers. Azure is not supported  by cloudmesh at this time.
 ```
 
+## Limitations
+
+The last update of Azure broke the ability for non-enterprise customers to query the RateCard API. Some work is being done in the community to remedy this.
+
+See:
+
+* [Roushan comment, June 28, 2019 ](https://feedback.azure.com/forums/170030-signup-and-billing/suggestions/4185186-expose-azure-pricing-details-as-rest-api)
+
+* [Virtual Machine Pricing](https://azure.microsoft.com/api/v2/pricing/virtual-machines-software/calculator/?culture=IN&v=20190614-1305-53667)
+
+* [App Service Pricing](https://azure.microsoft.com/api/v2/pricing/app-service/calculator/?culture=IN&discount=mosp&v=20190614-1305-53667)
 
 [![image](https://img.shields.io/travis/TankerHQ/cloudmesh-bar.svg?branch=master)](https://travis-ci.org/TankerHQ/cloudmesn-bar)
 
@@ -105,4 +116,4 @@ Else, run any of the following commands.
 
 see cloudmesh.cmd5
 
-* https://github.com/cloudmesh/cloudmesh.cmd5
+* https://github.com/cloudmesh/cloudmesh.cmd
