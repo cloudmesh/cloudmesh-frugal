@@ -1,18 +1,12 @@
 from __future__ import print_function
 from cloudmesh.shell.command import command
 from cloudmesh.shell.command import PluginCommand
-from cloudmesh.shell.shell import Shell
 from cloudmesh.common.console import Console
-from cloudmesh.compute.vm.Provider import Provider
 import pandas as pd
 import numpy as np
 from cloudmesh.common.Printer import Printer
-from cloudmesh.frugal.api import aws_frugal, gcp_frugal, azure_frugal, storage
-from datetime import datetime
+from cloudmesh.frugal.api import aws_frugal, gcp_frugal, storage
 from cloudmesh.common.variables import Variables
-from cloudmesh.vm.command.vm import VmCommand
-from cloudmesh.mongo.CmDatabase import CmDatabase
-from os import path
 import PySimpleGUI as gui
 from time import time
 
@@ -187,19 +181,21 @@ class FrugalCommand(PluginCommand):
                 locs.append(i)
         if 'gcp' in clouds:
             # get gcp pricing info
-            gcpframe = gcp_frugal.get_google_pricing(refresh=refresh)
-            if gcpframe is not None:
-                printlist = printlist + list(gcpframe.find())
-            flavor_frame = pd.DataFrame(printlist)[
-                ['provider', 'machine-name', 'location', 'cores', 'core/price',
-                 'memory', 'memory/price', 'price']]
-
+            gcpframe= gcp_frugal.get_google_pricing(refresh=refresh)
+            # gcpframe = gcp_frugal.get_google_pricing(refresh=refresh)
+            # if gcpframe is not None:
+            #     printlist = printlist + list(gcpframe.find())
+            # flavor_frame = pd.DataFrame(printlist)[
+            #     ['provider', 'machine-name', 'location', 'cores', 'core/price',
+            #      'memory', 'memory/price', 'price']]
         if 'aws' in clouds and 'gcp' in clouds:
-            flavor_frame= pd.concat([awsframe, flavor_frame])
+            flavor_frame= pd.concat([awsframe, gcpframe])
         elif 'gcp' in clouds:
-            flavor_frame=flavor_frame
-        else:
+            flavor_frame=gcpframe
+        elif 'aws' in clouds:
             flavor_frame=awsframe
+        else:
+            raise('Please use gcp or aws')
         flavor_frame = flavor_frame.replace([np.inf, -np.inf], np.nan).dropna()
 
         # sort the dataframe by order

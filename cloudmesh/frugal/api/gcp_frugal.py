@@ -1,9 +1,8 @@
 import requests
 import numpy as np
-from datetime import datetime
-from cloudmesh.mongo.CmDatabase import CmDatabase
 from cloudmesh.common.console import Console
 from cloudmesh.frugal.api import helpers
+import pandas as pd
 
 
 ############
@@ -12,13 +11,17 @@ from cloudmesh.frugal.api import helpers
 
 def get_google_pricing(refresh=False):
     # connect to cm db and check for Google info
-    cm = CmDatabase()
-    googleinfo = cm.collection('gcp-frugal')
 
-    if googleinfo.estimated_document_count() > 0 and not refresh:
-        Console.msg(f"Using local db gcp flavors...")
-        return googleinfo
-    else:
+    from pathlib import Path
+    path = str(Path.home())+('/cm/cloudmesh-frugal/cloudmesh/frugal/gcp-data')
+    from os import listdir
+    from os.path import isfile, join
+    data_dir = [f for f in listdir(path) if isfile(join(path, f))]
+
+    # if googleinfo.estimated_document_count() > 0 and not refresh:
+    #     Console.msg(f"Using local db gcp flavors...")
+    #     return googleinfo
+    if refresh:
         Console.msg(f"Pulling gcp flavor price information...")
         googleinfo = requests.get(
             'https://cloudpricingcalculator.appspot.com/static/data/pricelist.json?v=1570117883807').json()[
@@ -40,26 +43,22 @@ def get_google_pricing(refresh=False):
                             print(locations[location])
                         google_list.append(np.array(
                             ['gcp', machine, location, float(cores),
-                             float(memory), float(locations[location])]))
+                         float(memory), float(locations[location])]))
         googleinforeturn = np.stack(google_list, axis=0)
 
-    googleinfo = np.stack(googleinforeturn, axis=0)
-    googleinfo = helpers.format_mat(googleinfo)
+        googleinfo = np.stack(googleinforeturn, axis=0)
+        googleinfo = helpers.format_mat(googleinfo)
 
-    # convert to list of dicts
-    googleinfo = googleinfo.to_dict('records')
+        # convert to list of dicts
+        googleinfo = googleinfo.to_dict('records')
 
-    # write back to cm db
-    for entry in googleinfo:
-        entry["cm"] = {
-            "kind": 'frugal',
-            "driver": 'gcp',
-            "cloud": 'gcp',
-            "name": str(entry['machine-name'] + '-' + entry['location']),
-            "updated": str(datetime.utcnow()),
-        }
 
-    Console.msg(f"Writing back to db ...")
-    cm.update(googleinfo, progress=True)
+        flavor_frame = pd.DataFrame(googleinfo)[
+            ['provider', 'machine-name', 'location', 'cores', 'core/price',
+             'memory', 'memory/price', 'price']]
+        flavor_frame.to_csv(join(path, 'gcp.csv'))
+    else:
+        flavor_frame = pd.read_csv(join(path, 'gcp.csv'))
 
-    return cm.collection('gcp-frugal')
+
+    return flavor_frame

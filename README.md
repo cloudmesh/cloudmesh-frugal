@@ -82,7 +82,7 @@ Follow prompts to price compare cloud storage and compute instances.
 
             Limitations:
 
-                frugal benchmark only work on implemented providers. Azure is not supported by cloudmesh at this time.
+                frugal benchmark only work on implemented providers. Azure is not supported  by cloudmesh at this time.
 ```
 
 
