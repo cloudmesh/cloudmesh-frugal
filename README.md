@@ -2,33 +2,42 @@ Documentation
 =============
 ### About
 
-Cloudmesh frugal is a cloudmesh commandline API that allows user to find the cheapest virtual machines, as well as compare their performance
+Cloudmesh frugal is a cloudmesh commandline API that allows user to find the cheapest virtual machines and/or cloud storage.
 
-### Installation
+### Prerequisites
+
+It is recommended that Cloudmesh be run in a Python virtual environment. This can be made using the following commands.
+
+```
+python3.8 -m venv  ~/ENV3
+source ~/ENV3/bin/activate
+```
 
 Cloudmesh frugal was created with Cloudmesh commands. Cloudmesh-installer must be installed to run.
+
 ```
-source ~/ENV3/bin/activate
 mkdir cm
-cd cm
 pip install cloudmesh-installer
-cloudmesh-installer get cms
+cd cm
 ```
 
 To install cloudmesh frugal, enter the following command. 
 
 ```
-cloudmesh-installer get aws google frugal
+cloudmesh-installer get aws frugal
 ```
+
+Follow prompts to price compare cloud storage and compute instances. 
+
+### Usage
+
 For easy use, run command 
 
 ``
 cms frugal gui
 ``
 
-Follow prompts to price compare cloud storage and compute instances. 
-
-### Usage
+Else, run any of the following commands.
 
 ```
         ::
