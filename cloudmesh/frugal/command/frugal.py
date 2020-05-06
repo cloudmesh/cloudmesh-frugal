@@ -26,9 +26,9 @@ class FrugalCommand(PluginCommand):
         ::
 
             Usage:
-                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION][--benchmark]
-                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD]
-                frugal gui[--benchmark]
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION] [--benchmark] [--output=FORMAT]
+                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD] [--benchmark] [--output=FORMAT]
+                frugal gui [--benchmark]
 
             Arguments:
               ORDER       sorting hierarchy, either price, cores, or
@@ -50,6 +50,8 @@ class FrugalCommand(PluginCommand):
                --order=ORDER     sets the sorting on the results list
                --size=SIZE       sets the number of results returned
                                  to the console
+               --output=FORMAT   Output format such as csv, json, table
+                                 [default: table]
 
 
             Description:
@@ -77,6 +79,7 @@ class FrugalCommand(PluginCommand):
 
 
         """
+        arguments.OUTPUT = arguments['--output'] or None
         arguments.REFRESH = arguments['--refresh'] or None
         arguments.SIZE = arguments['--size'] or None
         arguments.ORDER = arguments['--order'] or None
@@ -88,6 +91,8 @@ class FrugalCommand(PluginCommand):
         if var_list['frugal.size'] is None:
             var_list['frugal.size'] = 25
         var_size = var_list['frugal.size']
+        if arguments.OUTPUT is None:
+            arguments.OUTPUT = 'table'
         if arguments.TYPE is None:
             arguments.TYPE = 'Standard'
         if arguments.REGION is None:
@@ -110,12 +115,15 @@ class FrugalCommand(PluginCommand):
 
         if arguments.compute:
             self.list(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
-                      resultssize=int(arguments.SIZE), cloud=arguments.CLOUD, region=arguments.REGION, benchmark=arguments.BENCHMARK)
-        elif arguments.boot:
-            self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),
-                      cloud=arguments.CLOUD)
+                      resultssize=int(arguments.SIZE), cloud=arguments.CLOUD,
+                      region=arguments.REGION, benchmark=arguments.BENCHMARK,
+                      output=arguments.OUTPUT)
+        # elif arguments.boot:
+        #     self.boot(order=arguments.ORDER, refresh=bool(arguments.REFRESH),cloud=arguments.CLOUD,
+        #               region=arguments.REGION, benchmark=arguments.BENCHMARKD)
         elif arguments.storage:
-            self.storage(type=arguments.TYPE, regions=arguments.REGION, cloud=arguments.CLOUD, benchmark=arguments.BENCHMARK)
+            self.storage(type=arguments.TYPE, regions=arguments.REGION, cloud=arguments.CLOUD,
+                         benchmark=arguments.BENCHMARK, output=arguments.OUTPUT)
 
         elif arguments.gui:
             self.gui()
@@ -126,7 +134,7 @@ class FrugalCommand(PluginCommand):
 
 
 
-    def list(self, region, order='price', resultssize=25, refresh=False, printit=True, cloud=None, benchmark=False):
+    def list(self, region, order='price', resultssize=25, refresh=False, printit=True, cloud=None, benchmark=False, output='table'):
         if benchmark:
             t = time()
         locdict = {'US_East': {'gcp': ['us-east1', 'us-east4', 'northamerica-northeast1'],
@@ -185,19 +193,11 @@ class FrugalCommand(PluginCommand):
             flavor_frame = pd.DataFrame(printlist)[
                 ['provider', 'machine-name', 'location', 'cores', 'core/price',
                  'memory', 'memory/price', 'price']]
-        # if 'azure' in clouds:
-        #     # get azure pricing info
-        #     azureframe = azure_frugal.get_azure_pricing(refresh=refresh)
-        #     if azureframe is not None:
-        #         printlist = printlist + list(azureframe.find())
-
-
-
-        # turn numpy array into a pandas dataframe, assign column names,
-        # and remove na values
 
         if 'aws' in clouds and 'gcp' in clouds:
             flavor_frame= pd.concat([awsframe, flavor_frame])
+        elif 'gcp' in clouds:
+            flavor_frame=flavor_frame
         else:
             flavor_frame=awsframe
         flavor_frame = flavor_frame.replace([np.inf, -np.inf], np.nan).dropna()
@@ -220,55 +220,19 @@ class FrugalCommand(PluginCommand):
             delta=time()-t
             print(delta)
             return delta
+
         if printit:
             print(Printer.write(
                 flavor_frame.head(resultssize).to_dict('records'),
                 order=['provider', 'machine-name', 'location', 'cores',
                        'core/price', 'memory',
-                       'memory/price', 'price']))
+                       'memory/price', 'price'], output=output))
         # return the final sorted data frame
         return flavor_frame
 
-    def boot(self, order='price', refresh=False, cloud=None, benchmark=False):
-
-        clouds = ['aws', 'gcp']
-        if cloud in clouds:
-            clouds = [cloud]
-
-        Console.msg(f"Checking to see which providers are bootable ...")
-        reachdict = {}
-
-        for cloudoption in clouds:
-            try:
-                tempProv = Provider(name=cloudoption,
-                                    configuration="~/.cloudmesh/cloudmesh.yaml")
-                Console.msg(cloudoption + " reachable ...")
-                reachdict[cloudoption] = tempProv
-            except:
-                Console.msg(cloudoption + " not available ...")
-
-        flavorframe = self.list(order, 10000000, refresh, printit=False,
-                                cloud=clouds)
-        # if flavorframe is None:
-        #     Console.error("cannot boot vm, check credentials")
-        #     return
-        keysya = list(reachdict.keys())
-        flavorframe = flavorframe[flavorframe['provider'].isin(keysya)]
-        Console.msg(f"Showing top 5 options, booting first option now...")
-        print(flavorframe.head(5))
-        converted = flavorframe.head(5).to_dict('records')
-        print(Printer.write(converted))
-        cheapest = converted[0]
-        var_list = Variables(filename="~/.cloudmesh/cms burn")
-        var_list['cloud'] = cheapest['provider']
-        Console.msg(f'new cloud is ' + var_list[
-            'cloud'] + ', booting up the vm with flavor ' + cheapest[
-                        'machine-name'])
-        vmcom = VmCommand()
-        vmcom.do_vm('boot --flavor=' + cheapest['machine-name'])
-        return ""
-
-    def storage(self, type, regions, cloud, benchmark=False):
+    def storage(self, type, regions, cloud, benchmark=False, output='table', resultssize=25):
+        if benchmark:
+            t= time()
         clouds = ['aws', 'gcp']
         if cloud in clouds:
             clouds = [cloud]
@@ -278,9 +242,13 @@ class FrugalCommand(PluginCommand):
             regions = ['US_East', 'US_Central', 'US_West', 'UK', 'Europe', 'Asia', 'Australia', 'Africa', 'S_America']
         type =type if type else 'Standard'
         list = storage.get_storage_pricing(type, clouds, regions)
-        if type != 'Archive':
-            print(Printer.write(list.to_dict('records'),order=['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
-                     'Location', 'Location Code']))
+        if benchmark:
+            delta= time()-t
+            print(delta)
+            return delta
+        print(output)
+        print(Printer.write(list.to_dict('records'),order=['Cloud', 'Name', 'Storage Class', 'PricePerUnit', 'Unit', 'StartingRange', 'EndingRange',
+                 'Location', 'Location Code'], output=output))
         return list
     def gui(self):
         gui.theme('SystemDefault1')
@@ -377,7 +345,7 @@ class FrugalCommand(PluginCommand):
                                    gui.Checkbox('S. America', size=(10, 1))]], title='',
                                   relief=gui.RELIEF_FLAT, tooltip='Use these to set Clouds to Search')],
                               [gui.Button('Ok'), gui.Button('Cancel')]]
-                    window1 = gui.Window('Cloud Storage Price Comparison', layout)
+                    window1 = gui.Window('Cloud Vompute Price Comparison', layout)
                     while True:
                         event, values = window1.read()
                         if event in (None, 'Cancel'):  # if user closes window or clicks cancel
@@ -401,7 +369,7 @@ class FrugalCommand(PluginCommand):
                         if values[i]:
                             locations.append(loc_dict[i])
                     list= self.list(order=values[0], refresh=values[1] ,
-                      resultssize=25, cloud=cloud, region=locations, printit=False)
+                      resultssize=100, cloud=cloud, region=locations, printit=False)
                     # Uses the first row (which should be column names) as columns names
                     header_list = list.columns.tolist()
                     # Drops the first row in the table (otherwise the header names and the first row will be the same)

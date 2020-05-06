@@ -18,8 +18,7 @@ cloudmesh-installer get cms
 To install cloudmesh frugal, enter the following command. 
 
 ```
-cloudmesh-installer get aws gcp
-cloudmesh-installer get frugal
+cloudmesh-installer get aws google frugal
 ```
 For easy use, run command 
 
@@ -33,10 +32,11 @@ Follow prompts to price compare cloud storage and compute instances.
 
 ```
         ::
+
             Usage:
-                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION]
-                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD]
-                frugal gui
+                frugal compute [--refresh] [--order=ORDER] [--size=SIZE] [--cloud=CLOUD] [--region=REGION] [--benchmark] [--output=FORMAT]
+                frugal storage [--type=TYPE] [--region=REGION] [--cloud=CLOUD] [--benchmark] [--output=FORMAT]
+                frugal gui [--benchmark]
 
             Arguments:
               ORDER       sorting hierarchy, either price, cores, or
@@ -45,7 +45,7 @@ Follow prompts to price compare cloud storage and compute instances.
                           console. Default is 25, can be changed with
                           cms set frugal.size = SIZE
               CLOUD       Limits the frugal method to a specific cloud
-                          instead of all supported providers
+                          instead of all supported providers. Works with AWS and GCP
               REGION      Limits the frugal method to a specific region
 
               TYPE        Storage type for frugal storage. Options include
@@ -58,8 +58,9 @@ Follow prompts to price compare cloud storage and compute instances.
                --order=ORDER     sets the sorting on the results list
                --size=SIZE       sets the number of results returned
                                  to the console
-               --benchmark       prints the benchmark results instead
-                                 of flavors
+               --output=FORMAT   Output format such as csv, json, table
+                                 [default: table]
+
 
             Description:
                 frugal compute
@@ -81,7 +82,7 @@ Follow prompts to price compare cloud storage and compute instances.
 
             Limitations:
 
-                frugal boot and benchmark only work on implemented providers
+                frugal benchmark only work on implemented providers. Azure is not supported by cloudmesh at this time.
 ```
 
 
